@@ -1,0 +1,16 @@
+<ion-view view-title="Home Checks">
+  <ion-content>
+	  <label class="item item-input">
+	    <i class="icon ion-search placeholder-icon"></i>
+	    <input type="text" placeholder="Search home checks" ng-model="hcquery">
+	  </label>
+    <ion-list>
+      	<ion-list>
+			<ion-item ng-repeat="hc in homechecks | filter:hcquery" ng-show="hc.HC_ID" href="#/app/homecheck/{{hc.HC_ID}}">
+		        <i class="icon ion-medkit"></i> VISIT {{hc.VISIT_NUMBER}} - {{hc.PRETTY_DATE_OF_VISIT}} [{{hc.HC_STATE_DESC}}]
+		        <br/>{{hc.ADDRESS}} ({{hc.USER_LNAME}})
+		      </ion-item>
+		</ion-list>
+    </ion-list>
+  </ion-content>
+</ion-view>

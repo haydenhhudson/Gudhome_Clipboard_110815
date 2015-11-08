@@ -1,0 +1,120 @@
+<ion-view view-title="Concierge Service">
+	<ion-content ng-repeat="s in service">
+	<div class="item item-divider item-button-right">
+		<h4 class="title"><i class="icon ion-wrench"></i>{{s.CONCIERGE_SERVICE_DESC}} </h4>
+			 <div class="row">
+			 		<div class="col col-75 padding" ng-show="{{s.SERVICE_DESC.length}}>0">
+		        		<ion-item class="wrap">Name : {{s.SERVICE_DESC}}</ion-item>
+		        	</div>
+		        	<div class="col col-75 padding" ng-hide="{{s.SERVICE_DESC.length}}>0">
+		        		Add Service Name
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear" ng-click="changename=true" ng-show="!changename">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="changename=false" ng-show="changename">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+	    		  </div>
+		        </div>
+					<div ng-show="changename">
+					    <form ng-submit="changeName(thename)">
+						    <label class="item item-input">
+								<input type="text" placeholder="Change service name" ng-model="thename.servicename">
+						  	</label>
+							<button type="submit" class="button button-block button-positive">Change service Name</button>
+						</form>
+					</div>
+		
+	</div>
+	<div class="list card">
+	 <div class="row">
+ 		<div class="col col-75 padding" ng-show="s.T_STATE_DESC">
+    		Status : <i class="icon {{s.ICON}}"></i> {{s.T_STATE_DESC}}
+    	</div>
+    	<div class="col col-75 padding" ng-hide="s.T_STATE_DESC">
+    		No status specified
+    	</div>
+    	<div class="col">
+	  	<a class="button button-clear" ng-click="showmestatus=true" ng-show="!showmestatus">  
+	      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+	    </a>
+	  </div>
+	 <div class="col">
+	  	<a class="button button-clear" ng-click="showmestatus=false" ng-show="showmestatus">
+	      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+	    </a>
+	  </div>
+    </div>
+	<div ng-show="showmestatus">
+		<button ng-repeat="state in states" class="button button-full button-dark button-outline" ng-click="submitAnswer({{state.T_STATE_ID}})">
+		{{state.T_STATE_DESC}}
+		</button>
+	</div>
+	</div>
+		
+		<div class="list card">
+			<div class="item item-divider">
+				Schedule service
+			</div>
+			<div class="row">
+			 		<div class="col col-75 padding" ng-show="s.PRETTY_DATE">
+		        		This service is scheduled for:
+						<i class="icon ion-ios-calendar-outline"></i> 
+						<ion-item class="wrap">{{s.PRETTY_DATE}}
+						<i ng-show="s.SVC_UNIT_QTY"> <br/>{{s.SVC_UNIT_QTY}} {{s.SVC_UNIT}}(s)</i>
+						</ion-item>
+		        	</div>
+		        	<div class="col col-75 padding" ng-hide="s.PRETTY_DATE">
+		        		<i class="icon ion-ios-calendar-outline"></i> Service has not been scheduled
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear" ng-click="showmedate=true" ng-show="!showmedate">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="showmedate=false" ng-show="showmedate">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+	    		  </div>
+		    </div>
+			<!--<a ng-show="s.PRETTY_DATE" ng-click="showmedate=true" class="item item-icon-left">
+				This service is scheduled for:
+				<i class="icon ion-ios-calendar-outline"></i> 
+				<ion-item class="wrap">{{s.PRETTY_DATE}}
+				<i ng-show="s.SVC_UNIT_QTY"> <br/>{{s.SVC_UNIT_QTY}} {{s.SVC_UNIT}}(s)</i>
+				</ion-item>
+				
+		</a>-->
+			<div ng-show="showmedate">
+				<form ng-submit="scheduleService(visit)">
+					<div class="list">
+						<div class="item item-input item-select">
+							<div class="input-label">
+							      Pick date:
+							</div>
+							<label class="item item-input">
+								<input type="date" ng-model="visit.date">
+							</label>
+						</div>
+						<div class="item item-input item-select">
+							<div class="input-label">
+							      Pick time:
+							</div>
+							<label class="item item-input">
+								<input type="time" ng-model="visit.visit_time">
+							</label>
+						</div>
+					</div>  
+					<button type="submit" class="button button-block button-positive">Schedule service</button>
+				</form>
+			</div>
+		</div>
+		
+		
+	</ion-content>
+</ion-view>

@@ -1,0 +1,56 @@
+<ion-view view-title="Contacts">
+  <ion-content>
+	  <div class="list card">
+			<div class="button-bar">
+				<a ng-click="showCust=false" class="button">
+				  	Partners
+				  	<b ng-hide="showCust"><i class="icon ion-checkmark-circled"></i> </b> 
+				  </a>
+				  <a ng-click="showCust=true" class="button">
+				  	Customers
+				  	<b ng-show="showCust"><i class="icon ion-checkmark-circled"></i> </b>
+				  </a>
+			</div>
+			<div ng-hide="showCust">
+				<div class="item item-input-inset">
+				    <label class="item-input-wrapper">
+				    <i class="icon ion-search placeholder-icon"></i>
+				      <input type="text" placeholder="Search pros" ng-model="proquery">
+				    </label>
+				    <a class="button button-small button-outline button-balanced" href="#/app/addpro">
+				      <i class="icon ion-person-add"></i>
+				    </a>
+				  </div>
+				<!--<div class="item item-input-inset">
+			    <label class="item-input-wrapper">
+			    	<i class="icon ion-search placeholder-icon"></i>
+			    	<input type="text" placeholder="Search pros" ng-model="proquery">
+			    </label>
+			 </div>-->
+				<a ng-repeat="pro in pros | filter:proquery" class="button button-block" href="#/app/contactpro/{{pro.PRO_ID}}">
+					<i class="icon ion-person"></i> {{pro.PRO_FNAME}} {{pro.PRO_LNAME}} ({{pro.ORG}})
+				</a>
+			</div>
+			<div ng-show="showCust">
+				<div class="item item-input-inset">
+				    <label class="item-input-wrapper">
+				    <i class="icon ion-search placeholder-icon"></i>
+				      <input type="text" placeholder="Search customers" ng-model="customerquery">
+				    </label>
+				    <a class="button button-small button-outline button-balanced" href="#/app/addcustomer">
+				      <i class="icon ion-person-add"></i>
+				    </a>
+				  </div>
+				<!--<div class="item item-input-inset">
+			    <label class="item-input-wrapper">
+			    	<i class="icon ion-search placeholder-icon"></i>
+			    	<input type="text" placeholder="Search customers" ng-model="customerquery">
+			    </label>
+			 </div>-->
+				<a ng-repeat="h in homeowners | filter:customerquery" class="button button-block" href="#/app/contacthomeowner/{{h.A_ID}}/{{h.USER_ID}}">
+					<i class="icon ion-person"></i> {{h.USER_FNAME}} {{h.USER_LNAME}}
+				</a>
+			</div>
+		</div>
+  </ion-content>
+</ion-view>

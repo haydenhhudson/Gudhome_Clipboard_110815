@@ -1,0 +1,44 @@
+<ion-view view-title="Properties">
+  <ion-content>
+  	<div class="item item-input-inset">
+	    <label class="item-input-wrapper">
+	    <i class="icon ion-search placeholder-icon"></i>
+	      <input type="text" placeholder="Search properties" ng-model="propquery">
+	    </label>
+	    <a class="button button-small button-outline button-balanced" href="#/app/addcustomer">
+	      <i class="icon ion-person-add"></i>
+	    </a>
+	</div>
+	<ion-list>
+		<ion-item ng-show="propquery" ng-repeat="address in addresses | filter:propquery" href="#/app/address/{{address.A_ID}}/{{address.PROP_ID}}">
+			<ion-item class="wrap">
+				<i class="icon ion-ios-home-outline"></i> {{address.ADDRESS}}, {{address.CITY}} ({{address.USER_FNAME}} {{address.USER_LNAME}}), {{address.ZIP}}
+			</ion-item>
+		</ion-item>
+		<ion-item ng-repeat="city in cities | filter:propquery" href="#/app/city/{{city.CITY}}">
+	        <i class="icon ion-ios-location-outline"></i> {{city.CITY}}
+	      </ion-item>
+	</ion-list>
+	  <!--<label class="item item-input">
+	    <i class="icon ion-search placeholder-icon"></i>
+	    <input type="text" placeholder="Search addresses" ng-model="query">
+	  </label>-->
+	
+    <!--<ion-list>
+	  <ion-item ng-show="query" ng-repeat="address in addresses | filter:query" href="#/app/address/{{address.A_ID}}/{{address.PROP_ID}}">
+        <i class="icon ion-ios-home-outline"></i> 
+        <ion-item class="wrap">
+        	{{address.ADDRESS}}, {{address.CITY}} ({{address.USER_FNAME}} {{address.USER_LNAME}})
+      	</ion-item>
+      </ion-item>
+      <ion-item ng-repeat="city in cities | filter:query" href="#/app/city/{{city.CITY}}">
+        <i class="icon ion-ios-location-outline"></i> {{city.CITY}}
+      </ion-item>
+    </ion-list>-->
+    <!--<ion-list>
+	    <ion-item href="#/app/addproperty">
+	   		<i class="icon ion-plus"></i> New property
+	    </ion-item>
+ </ion-list>-->
+  </ion-content>
+</ion-view>

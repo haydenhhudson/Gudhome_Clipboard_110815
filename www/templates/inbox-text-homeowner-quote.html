@@ -1,0 +1,100 @@
+<ion-view view-title="Preview message">
+  <ion-content ng-repeat="h in honumber">
+	  <div class="list card" >
+	  	 <div class="row">
+			  <div class="col col-75 padding" >
+			  	 Recipient : {{h.USER_FNAME}} {{h.USER_LNAME}}
+			  </div>
+			 <div class="col">
+			  	<a class="button button-balanced button-small" href="#/app/contacthomeowner/{{h.A_ID}}/{{h.USER_ID}}">
+			      <i class="icon ion-person"></i>
+			    </a>
+    		  </div>
+			</div>
+		  <!--<label class="item item-input">
+		    Recipient : {{h.USER_FNAME}} {{h.USER_LNAME}}
+		  </label>-->
+		  <div class="row">
+			  <div class="col col-50 padding" >
+			  	To cell #:
+			  </div>
+			 <div class="col">
+			  	Customer
+    		  </div>
+    		  <div class="col">
+			  	Remove
+    		  </div>
+			</div>
+			<div class="row" ng-repeat="d in digits">
+			  <div class="col col-50 padding" >
+			  	{{d.PRETTY_CELL_NUMBER}} 
+			  	<br/>({{d.USER_FNAME}})
+			  	<br/>({{d.PHONE_TYPE_DESC}})
+			  </div>
+			 <div class="col">
+			  	<i class="icon {{d.PRETTY_IS_CUSTOMER}}"></i>
+    		  </div>
+    		  <div class="col">
+			  	<button class="button icon ion-ios-minus button-small button-assertive button-outline" ng-click="removeRecipient('{{d.ROWNUM}}')"></button>
+    		  </div>
+			</div>
+		  <div class="row">
+			  <div class="col col-75 padding" >
+			  	Add customer phonenumber
+			  </div>
+			 <div class="col">
+			  	<a class="button button-balanced button-small" href="#/app/contacthomeowner/{{h.A_ID}}/{{h.USER_ID}}">
+			      <i class="icon ion-plus"></i>
+			    </a>
+    		  </div>
+			</div>
+		  <label class="item item-input">
+		  	<ion-item class="wrap">
+			  	[PROPOSAL] 
+			  	<div ng-repeat="m in message">
+			  	Project '{{m.T_NAME}}' is projected to cost {{m.BILL | currency :"$"}} {{m.TAX_TEXT}}.
+			  	</div>
+			  	Please follow this link to approve : 
+			  	<a href="http://gudhome.com/mygudhome/proposal.php?message_id={{h.MESSAGE_ID}}">http://gudhome.com/mygudhome/proposal.php?message_id={{h.MESSAGE_ID}}</a>
+		  	</ion-item>
+		    <!--<textarea rows="4" valuer="Type your Message here" ng-model="thetext.message"></textarea>-->
+		  </label>
+		<form ng-submit="sendText(thetext)">
+		  <button type="submit" ng-show="!senttext" class="button button-block button-positive"><i class="icon ion-paper-airplane"></i> Send text</button>
+		</form>
+		<button ng-show="senttext" class="button button-block button-balanced"><i class="icon ion-android-checkbox"></i> Text Sent!</button>
+	  
+	  
+	  </div>
+	  				<button class="button button-block button-royal" ng-click="openUrl()">
+		                <i class="icon ion-eye"></i> Preview approval page
+		            </button>
+	  <div class="list card padding">
+  		This text will be accompanied by an email to the following recipient(s) :
+  		<ul>
+  			<li ng-repeat="recipient in recipients">
+  				{{recipient.EMAIL}}
+  			</li>
+  		</ul>
+  	  </div>
+	  <a ng-repeat="ht in homeowner_texts" ng-show="{{ht.NUMBER_OF_INTEREST}}" class="item item-icon-{{ht.ALIGNMENT}}">
+			<div class="padding">[{{ht.PRETTY_DATE}}] {{ht.FROM_NAME}} wrote <i ng-show="{{ht.CSS_CLASS.length}}<4"> to {{ht.TO_NAME}}</i>:</div>
+			<ion-item class="us" ng-show="{{ht.CSS_CLASS.length}}<4">
+				{{ht.TEXT_CONTENT}}
+				<div class="item item-image" ng-show="{{ht.MEDIA_LINK}}">
+					<img src="{{pt.MEDIA_LINK}}">
+				</div>
+			</ion-item>
+			<ion-item class="them" ng-show="{{ht.CSS_CLASS.length}}>2">
+				{{ht.TEXT_CONTENT}}
+				<div class="item item-image" ng-show="{{ht.MEDIA_LINK}}">
+					<img src="{{pt.MEDIA_LINK}}">
+				</div>
+			</ion-item>
+		</a>
+		
+		<a class="button button-block button-outline button-calm" href="#/app/address/{{h.A_ID}}/{{h.PROP_ID}}">
+			<i class="icon ion-arrow-return-right"></i>  Go to address page
+		</a>
+  </ion-content>
+</ion-view>

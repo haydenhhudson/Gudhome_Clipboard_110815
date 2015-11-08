@@ -1,0 +1,119 @@
+<ion-view view-title="Contact Partner">
+  <ion-content ng-repeat="p in pro">
+  		<div class="card padding">
+	       <i class="icon ion-person"></i> Name : {{p.PRO_FNAME}} {{p.PRO_LNAME}}
+	       <br/> ({{p.ORG}})
+		</div>
+	  <div class="list card">
+			<div class="item item-divider">
+		       Phonenumber(s)
+		   </div>
+	        <div class="row" ng-repeat="ph in phonenbrs">
+			  <div class="col col-75 padding" >
+			  	{{ph.PHONE_TYPE_DESC}} : {{ph.PRETTY_CELL_NUMBER}}
+			  </div>
+			  <div class="col">
+			  	<a class="button button-positive button-small" ng-click="openUrl('{{ph.PHONENBR}}')">
+			      <i class="icon ion-ios-telephone"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-balanced button-small" href="#/app/textpro/{{ph.PHONENBR}}">
+			      <i class="icon ion-chatbox"></i>
+			    </a>
+    		  </div>
+			</div>
+			<div class="item item-divider">
+	   		</div>
+			<div class="row">
+	        	<div class="col col-75 padding">
+	        		Add new phone number
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear button-small" ng-click="showmenbr=true" ng-show="!showmenbr">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear button-small" ng-click="showmenbr=false" ng-show="showmenbr">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+    		  </div>
+	        </div>
+			<form ng-show="showmenbr" ng-submit="addPhonenbr(phone)">
+				<div class="list">
+					<label class="item item-input item-stacked-label">
+					    <span class="input-label">Phonenbr</span>
+					    <input type="tel" placeholder="Enter only the digits." ng-model="phone.nbr">
+					</label>
+					<div class="item item-input item-select">
+						<div class="input-label">
+						  Type
+						</div>
+						<select ng-model="phone.thetype">
+							<option ng-repeat="phtype in phonetypes" value="{{phtype.PHONE_TYPE_ID}}">{{phtype.PHONE_TYPE_DESC}}</option>
+						</select>
+					</div>	
+				</div>  
+				<button type="submit" class="button button-block button-positive">Add new phone number</button>
+			</form>
+		</div>
+		
+		<div class="list card">
+		<div class="item item-divider">
+	       Email(s)
+	   </div>
+			<div class="row" ng-repeat="e in emails">
+			  <div class="col col-75 padding" >
+			  	{{e.EMAIL}}
+			  </div>
+			 <div class="col">
+			  	<!--<a class="button button-balanced button-small" href="#/app/emailhomeowner/{{e.EMAIL}}">
+			      <i class="icon ion-android-mail"></i>
+			   </a>-->
+    		  </div>
+			</div>
+		<div class="item item-divider">
+	   </div>
+		<!--<div class="row">
+	        	<div class="col col-75 padding">
+	        		Add new email
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear button-small" ng-click="showmeemail=true" ng-show="!showmeemail">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear button-small" ng-click="showmeemail=false" ng-show="showmeemail">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+    		  </div>
+	    </div>
+		<form ng-show="showmeemail" ng-submit="addEmail(email)">
+			<div class="list">
+				<label class="item item-input item-stacked-label">
+				    <span class="input-label">Email</span>
+				    <input type="tel" placeholder="Type email" ng-model="email.address">
+				</label>
+			</div>  
+			<button type="submit" class="button button-block button-positive">Add new email</button>
+		</form>-->
+		</div>
+		<div class="item item-divider">Assigned projects</div>
+	 <label class="item item-input">
+    	<i class="icon ion-search placeholder-icon"></i>
+      	<input type="text" placeholder="Search projects" ng-model="projquery">
+    </label>
+	<ion-list>
+		<ion-item ng-repeat="proj in projects | filter:projquery" href="#/app/projectservice/{{proj.T_ID}}/{{proj.ROWNUM}}">
+			<ion-item class="wrap">
+			{{proj.ADDRESS}}/{{proj.T_NAME}}/{{proj.DISPLAY_NAME}}/{{proj.SERVICE_STATE_DESC}}
+			</ion-item>
+		</ion-item>
+		<ion-item ng-repeat="city in cities | filter:propquery" href="#/app/city/{{city.CITY}}">
+	        <i class="icon ion-ios-location-outline"></i> {{city.CITY}}
+	      </ion-item>
+	</ion-list>
+  </ion-content>
+</ion-view>

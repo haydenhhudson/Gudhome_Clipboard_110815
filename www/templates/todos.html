@@ -1,0 +1,28 @@
+<ion-view view-title="Hayden's Todos">
+  <ion-content>
+	  <div class="item item-input-inset">
+	    <label class="item-input-wrapper">
+	    <i class="icon ion-search placeholder-icon"></i>
+	      <input type="text" placeholder="Search todos" ng-model="todoquery">
+	    </label>
+	</div>
+	<ion-list>
+		<ion-item ng-repeat="todo in todos | filter:todoquery" href="#/app/todo/{{todo.TODO_ID}}">
+			<ion-item class="wrap">
+				<i class="icon ion-alert"></i> {{todo.TODO_DESC}}
+				<br/>[{{todo.T_NAME}}] <div ng-show="efoij">{{todo.ADDRESS}} {{todo.CITY}} {{todo.USER_FNAME}} {{todo.USER_LNAME}}</div>
+			</ion-item>
+		</ion-item>
+		<ion-item ng-repeat="proj in projects | filter:todoquery" href="#/app/project/{{proj.T_ID}}">
+	        <i class="icon ion-hammer"></i> {{proj.T_NAME}}
+	        <div ng-show="efoij">{{proj.ADDRESS}} {{proj.CITY}} {{proj.USER_FNAME}} {{proj.USER_LNAME}}</div>
+	      </ion-item>
+	      <ion-item ng-repeat="snooze in snoozeds | filter:todoquery" href="#/app/todo/{{snooze.TODO_ID}}">
+			<ion-item class="wrap">
+				<i class="icon ion-android-cloud-circle"></i> {{snooze.TODO_DESC}}
+				<br/>[{{snooze.T_NAME}}] <div ng-show="efoij">{{snooze.ADDRESS}} {{snooze.CITY}} {{snooze.USER_FNAME}} {{snooze.USER_LNAME}}</div>
+			</ion-item>
+		</ion-item>
+	</ion-list>
+  </ion-content>
+</ion-view>

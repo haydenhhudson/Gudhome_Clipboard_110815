@@ -1,0 +1,100 @@
+<ion-view view-title="Report Hours">
+	<ion-content>
+    <!-- ion-content overflow-scroll="true"-->
+    <!--
+    	app.module('app',['ionic]).config(function($ionicConfigProvider){
+		$IONICCONFIGPROVIDER.SCROLLING.JSSCROLLING(FALSE);
+    	});
+    -->
+    <div class="list card">
+    	<div class="item item-divider">
+			 Today's time card
+		</div>
+	        <div class="row" ng-repeat="report in reports">
+	        <div class="col">
+			  	<div class="item {{report.ORG_COLOR}} item-text-wrap">
+			      <small>{{report.ORG}} </small>
+			    </div>
+    		  </div>
+			  <div class="col col-50 padding" >
+			  	
+			  	 {{report.ADDRESS}}
+			  	  / {{report.TASK_TYPE_DESC}}
+			  	  / {{report.T_NAME}}
+			  	  <br/>[{{report.VISIT_DURATION}} hr]
+			  </div>
+			  <div class="col">
+			  	<a class="button button-{{report.COLOR}} button-small" href="#/app/reporthours2/{{report.REPORT_ID}}">
+			      {{report.STATUS}}
+			    </a>
+    		  </div>
+			</div>
+			<div ng-repeat="c in check">
+				<button class="button button-block button-outline button-positive" ng-click="emailReport()">
+			      <i class="icon ion-paper-airplane"></i> {{c.STATUS}}
+			    </button>
+			    <div class="row">
+					  <div class="col col-75" >
+					  	Hour total:
+					  </div>
+					  <div class="col">
+					  	{{c.TOTAL_HOURS}} hour(s)
+		    		  </div>
+				</div>
+				<div class="item item-divider">
+					Provide a summary
+				</div>
+				<div class="row">
+			 		<div class="col col-75 padding" ng-show="c.SUMMARY">
+			    		Summary : {{c.SUMMARY}}
+			    	</div>
+			    	<div class="col col-75 padding" ng-hide="c.SUMMARY">
+			    		No summary provided
+			    	</div>
+			    	<div class="col">
+				  	<a class="button button-clear" ng-click="showmesummary=true" ng-show="!showmesummary">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+				  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="showmesummary=false" ng-show="showmesummary">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+				  </div>
+			    </div>
+				<form ng-show="showmesummary" ng-submit="addNote(note)">
+				    <label class="item item-input">
+						<textarea rows="5" placeholder="When did you begin and end your day?" ng-model="note.note"></textarea>
+					</label>
+					<button type="submit" class="button button-block button-positive">Update</button>
+				</form>
+			</div>
+		</div>
+    
+    <div class="card">
+    	<div class="item item-divider">
+			Add new task to time card
+		</div>
+		<a ng-click="showmeaddresses=true" class="item item-icon-left">
+        	<i class="icon ion-plus-circled"></i> Start by picking a property
+     	</a>
+		<div ng-show="showmeaddresses">
+			<div class="item item-input-inset">
+			    <label class="item-input-wrapper">
+			    <i class="icon ion-search placeholder-icon"></i>
+			      <input type="text" placeholder="Search properties" ng-model="addressquery">
+			    </label>
+			    <button class="button button-small button-outline button-assertive" ng-click="showmeaddresses=false">
+			      <i class="icon ion-close"></i>
+			    </button>
+			</div>
+			<button ng-repeat="address in addresses | filter:addressquery" class="button button-full button-outline button-dark" ng-click="pickProperty('{{address.A_ID}}', '{{address.PROP_ID}}')">
+			  {{address.ADDRESS}}, {{address.CITY}} ({{address.USER_FNAME}} {{address.USER_LNAME}})
+			</button>
+		</div>
+	</div>
+	
+	<a class="button button-block button-outline button-dark" href="#/app/openhours">Open Gudhome hours</a>
+    
+	</ion-content>
+</ion-view>

@@ -1,0 +1,73 @@
+<ion-view view-title="Proposal builder">
+	<ion-content >
+    
+    <div class="list card"  ng-repeat="c in check" ng-show="{{c.T_COUNT}}>0" >
+    	<div class="item item-divider">
+			(3) Text proposals for the following projects
+		</div>
+	        <!--<div class="row" ng-repeat="cq in chosen_quotes">
+			  <div class="col col-75 padding" >
+			  	{{report.T_NAME}} ({{report.ADDRESS}}) [{{report.VISIT_DURATION}} hour(s)]
+			  </div>
+			  <div class="col">
+			  	<a class="button button-{{report.COLOR}} button-small" href="#/app/reporthours2/{{report.REPORT_ID}}">
+			      {{report.STATUS}}
+			    </a>
+    		  </div>
+			</div>-->
+			<div class="row" ng-repeat="cq in chosen_quotes">
+		  <div class="col col-75 padding" >
+		  	{{cq.T_NAME}} [{{cq.BILL | currency:"$"}} {{cq.TAX_TEXT}}]
+		  </div>
+		  <div class="col">
+		  	<button class="button button-assertive button-small" ng-click="remove('{{cq.T_ID}}')">
+		      <i class="icon ion-minus"></i>
+		    </button>
+		  </div>
+		</div>
+			<a class="button button-block button-outline button-positive" ng-click="previewMessage('{{c.MESSAGE_ID}}')">
+		      <i class="icon ion-eye"></i> Preview message
+		    </a>
+		</div>
+		
+    <div class="card" ng-show="showmeproj">
+    	<div class="item item-divider">
+			(2) Pick a project
+		</div>
+		<!--<button ng-repeat="quote in quotes" class="button button-full button-outline button-dark" ng-click="addToMessage('{{quote.T_ID}}')">
+			  {{quote.T_NAME}} [{{quote.BILL | currency:"$"}}]
+		</button>-->
+		<div class="row" ng-repeat="quote in quotes">
+		  <div class="col col-75 padding" >
+		  	{{quote.T_NAME}} [{{quote.BILL | currency:"$"}} {{quote.TAX_TEXT}}] ({{quote.T_STATE_DESC}})
+		  </div>
+		  <div class="col">
+		  	<button class="button button-balanced button-small" ng-click="addToMessage('{{quote.T_ID}}')">
+		      <i class="icon ion-plus"></i>
+		    </button>
+		  </div>
+		</div>
+	</div>
+    
+    <div class="card" >
+		<a ng-click="showmeaddresses=true" class="item item-icon-left">
+        	(1) Start by picking a property
+     	</a>
+		<div ng-show="showmeaddresses">
+			<div class="item item-input-inset">
+			    <label class="item-input-wrapper">
+			    <i class="icon ion-search placeholder-icon"></i>
+			      <input type="text" placeholder="Search properties" ng-model="addressquery">
+			    </label>
+			    <button class="button button-small button-outline button-assertive" ng-click="showmeaddresses=false">
+			      <i class="icon ion-close"></i>
+			    </button>
+			</div>
+			<button ng-repeat="address in addresses | filter:addressquery" class="button button-full button-outline button-dark" ng-click="pickProperty('{{address.A_ID}}', '{{address.PROP_ID}}')">
+			  {{address.ADDRESS}}, {{address.CITY}} ({{address.USER_FNAME}} {{address.USER_LNAME}})
+			</button>
+		</div>
+	</div>
+    
+	</ion-content>
+</ion-view>

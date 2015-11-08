@@ -1,0 +1,35 @@
+<ion-view view-title="Component Photo">
+	<ion-content ng-repeat="p in photo">
+		<div class="item item-divider item-button-right">
+			<h4 class="title"><i class="icon ion-ios-loop-strong"></i> {{p.COMPONENT_DESC}} {{p.PRETTY_COUNT}} ({{p.LOCATION_DESC}})</h4>
+		</div>
+		<div class="list card">
+			<a ng-click="showmenote=true" class="item item-icon-left">
+		        	<i class="icon ion-compose"></i>  Note : 
+		        	<ion-item class="wrap">
+		        		<div ng-hide="new_note.receivedNOTE">{{p.MEDIA_NOTE}}</div> {{new_note.receivedNOTE}}
+					</ion-item>
+		        </a>
+		        	<div ng-show="showmenote" class="item item-button-right">
+		        		<button class="button button-outline button-assertive" ng-click="showmenote=false">
+					      <i class="icon ion-close"></i>
+					    </button>
+					    <form ng-submit="addNote(note)">
+						    <label class="item item-input">
+								<textarea rows="5" placeholder="Write in complete sentences." ng-model="note.note"></textarea>
+							</label>
+							<button type="submit" class="button button-block button-positive">Update</button>
+						</form>
+			</div>
+			<div class="item item-image">
+		    	<img src="{{p.MEDIA_LINK}}">
+			</div>
+		</div>
+		<a class="button button-block button-outline button-calm" href="#/app/homeprofilecomponent/{{p.A_ID}}/{{p.PROP_ID}}/{{p.COMPONENT_ID}}/{{p.LOCATION_ID}}/{{p.COUNT}}">
+			<i class="icon ion-arrow-return-right"></i>  Return to component page
+		</a>
+		<a class="button button-block button-outline button-assertive" ng-click="deletePhoto()">
+			<i class="icon ion-trash-a"></i>  Delete photo
+		</a>
+	</ion-content>
+</ion-view>

@@ -1,0 +1,219 @@
+<ion-view view-title="Changeable">
+	<ion-content ng-repeat="c in changeable">
+		<div class="item item-divider item-button-right">
+			<h4 class="title"><i class="icon ion-ios-loop-strong"></i> {{c.CHANGEABLE_DESC}} {{c.PRETTY_COUNT}}</h4>
+		</div>
+            
+		<div class="row">
+	 		<div class="col col-75 padding">
+	    		<i class="icon ion-ios-location-outline"></i> Location : {{c.LOCATION_DESC}}
+	    	</div>
+	    	<div class="col">
+		  	<a class="button button-clear" ng-click="showmeloc=true" ng-show="!showmeloc">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear" ng-click="showmeloc=false" ng-show="showmeloc">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+	    </div>
+		<div ng-show="showmeloc">
+		    <form ng-submit="brandNewLocation(locationname)">
+			    <label class="item item-input">
+					<input type="text" placeholder="Type location" ng-model="locationname.newlocation">
+			  	</label>
+			  	<a ng-repeat="location in locations | filter:locationname.newlocation" class="item item-icon-left" ng-click="changeLocation({{location.LOCATION_ID}})" >
+					 <i class="icon ion-log-in"></i> {{location.LOCATION_DESC}} 
+				</a>
+				<button type="submit" class="button button-block button-positive">Add new location</button>
+			</form>
+		</div>
+		<div class="row">
+	 		<div class="col col-75 padding">
+	    		<i class="icon ion-clipboard"></i> Specs : 
+		        	<div class="item item-text-wrap">
+		        		<div ng-hide="new_specs.receivedSPECS">{{c.SPEC_DESC}}</div> {{new_specs.receivedSPECS}}
+		        	</div>
+	    	</div>
+	    	<div class="col">
+		  	<a class="button button-clear" ng-click="showmespec=true" ng-show="!showmespec">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear" ng-click="showmespec=false" ng-show="showmespec">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+	    </div>
+    	<div ng-show="showmespec">
+		    <form ng-submit="brandNewSpecs(specname)">
+			    <label class="item item-input">
+					<input type="text" placeholder="Type specs" ng-model="specname.newspecs">
+			  	</label>
+			  	<a ng-repeat="spec in specs | filter:specname.newspecs" class="item item-icon-left" ng-click="changeSpecs({{spec.SPEC_ID}})" >
+					 <i class="icon ion-log-in"></i> {{spec.SPEC_DESC}} 
+				</a>
+				<button type="submit" class="button button-block button-positive">Add new spec</button>
+			</form>
+		</div>
+		<div class="row">
+	 		<div class="col col-75 padding">
+	    		<i class="icon ion-compose"></i>  Note : 
+		        	<ion-item class="wrap">
+		        		<div ng-hide="new_note.receivedNOTE">{{c.NOTE}}</div> {{new_note.receivedNOTE}}
+					</ion-item>
+	    	</div>
+	    	<div class="col">
+		  	<a class="button button-clear" ng-click="showmenote=true" ng-show="!showmenote">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear" ng-click="showmenote=false" ng-show="showmenote">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+	    </div>
+    	<div ng-show="showmenote">
+		    <form ng-submit="addNote(note)">
+			    <label class="item item-input">
+					<textarea rows="5" placeholder="Write in complete sentences." ng-model="note.note"></textarea>
+				</label>
+				<button type="submit" class="button button-block button-positive">Update</button>
+			</form>
+		</div>
+		
+		<div class="row">
+        	<div class="col col-75 padding">
+        		<i class="icon ion-images"></i> Photo(s)
+        	</div>
+        	<div class="col">
+		  	<a class="button button-clear" ng-click="showmephotos=true" ng-show="!showmephotos">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear" ng-click="showmephotos=false" ng-show="showmephotos">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+        </div>
+		<div ng-show="showmephotos">
+			
+			<button class="button button-icon icon ion-camera" ng-click="upload()"></button>
+				<div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
+		            <div class="col col-25" ng-if="$index < images.length">
+		                <a href="#/app/homeprofilechangeabletmedia2/{{c.A_ID}}/{{c.PROP_ID}}/{{c.INSPECT_ID}}/{{c.LOCATION_ID}}/{{c.COUNT}}/{{images[$index].$id}}">
+		                	<img ng-src="data:image/jpeg;base64,{{images[$index].image}}" width="100%" />
+		                </a>
+		            </div>
+		            <div class="col col-25" ng-if="$index + 1 < images.length">
+		                <img ng-src="data:image/jpeg;base64,{{images[$index + 1].image}}" width="100%" />
+		            </div>
+		            <div class="col col-25" ng-if="$index + 2 < images.length">
+		                <img ng-src="data:image/jpeg;base64,{{images[$index + 2].image}}" width="100%" />
+		            </div>
+		            <div class="col col-25" ng-if="$index + 3 < images.length">
+		                <img ng-src="data:image/jpeg;base64,{{images[$index + 3].image}}" width="100%" />
+		            </div>
+		        </div>
+		</div>
+		<div class="item item-divider">
+		</div>
+		<div class="row">
+        	<div class="col col-75 padding">
+        		<i class="icon ion-calendar"></i> Edit Service Schedule (Recommended frequency : {{c.RECOMMENDED_FREQ}} time(s)/year)
+        	</div>
+        	<div class="col">
+		  	<a class="button button-clear" ng-click="calendar=true" ng-show="!calendar">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear" ng-click="calendar=false" ng-show="calendar">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+        </div>
+		<div ng-show="calendar">
+			<form ng-submit="changeSchedule(visit)">
+				<ul class="list">
+				  <li class="item item-checkbox">
+				     <label class="checkbox">
+				       <input type="checkbox" ng-model="visit.visit1">
+				     </label>
+				     Visit 1
+				  </li>
+				  <li class="item item-checkbox">
+				     <label class="checkbox">
+				       <input type="checkbox" ng-model="visit.visit2">
+				     </label>
+				     Visit 2
+				  </li>
+				  <li class="item item-checkbox">
+				     <label class="checkbox">
+				       <input type="checkbox" ng-model="visit.visit3">
+				     </label>
+				     Visit 3
+				  </li>
+				  <li class="item item-checkbox">
+				     <label class="checkbox">
+				       <input type="checkbox" ng-model="visit.visit4">
+				     </label>
+				     Visit 4
+				  </li>
+				</ul>
+				<button type="submit" class="button button-block button-positive"><i class="icon ion-calendar"></i> Change schedule</button>
+			</form>
+		</div>
+		<ion-list>
+			<ion-item>
+				Visit 1 : <i class="icon {{c.VISIT_1}}"></i>
+			</ion-item>
+			<ion-item>
+				Visit 2 : <i class="icon {{c.VISIT_2}}"></i>
+			</ion-item>
+			<ion-item>
+				Visit 3 : <i class="icon {{c.VISIT_3}}"></i>
+			</ion-item>
+			<ion-item>
+				Visit 4 : <i class="icon {{c.VISIT_4}}"></i>
+			</ion-item>
+		</ion-list>
+		<div class="item item-divider">
+		</div>
+		<!--<div class="row">
+	 		<div class="col col-75 padding">
+	    		<i class="icon ion-ios-timer"></i> View Home Check history
+	    	</div>
+	    	<div class="col">
+		  	<a class="button button-clear" ng-click="history=true" ng-show="!history">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear" ng-click="history=false" ng-show="history">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+	    </div>
+	    <div ng-show="history">
+			<button class="button button-block" ng-repeat="t in thehistory" ng-click="openUrl('{{t.HC_ID}}')" ng-show="{{t.HC_ID}}">
+                Action: {{t.ACTION_DONE_DESC}} 
+                <br/>[Visit #{{t.PRETTY_VISIT_NUMBER}} <smalll>({{t.PRETTY_DATE_OF_VISIT}})</smalll>]
+            </button>
+     </div>-->
+		<div class="item item-divider">
+		</div>
+		<a class="button button-block button-outline button-calm" href="#/app/homeprofile/{{c.A_ID}}/{{c.PROP_ID}}">
+			<i class="icon ion-arrow-return-right"></i>  Return to profile
+		</a>
+		<a class="button button-block button-outline button-assertive" ng-click="deleteChangeable()">
+			<i class="icon ion-trash-a"></i>  Delete changeable
+		</a>
+		
+	</ion-content>
+</ion-view>

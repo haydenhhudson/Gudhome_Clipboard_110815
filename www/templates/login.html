@@ -1,0 +1,28 @@
+<ion-modal-view>
+  <ion-header-bar>
+    <h1 class="title"><i class="icon ion-unlocked"></i> Login</h1>
+    <!--<div class="buttons">
+      <button class="button button-clear" ng-click="closeLogin()">Close</button>
+    </div>-->
+  </ion-header-bar>
+  <ion-content>
+	<div class="list">
+		<form ng-submit="theLogin(loginData)">
+		    <label class="item item-input">
+		    	<span class="input-label">Email</span>
+	          	<input type="text" ng-model="loginData.email">
+			</label>
+			<label class="item item-input">
+	          <span class="input-label">Password</span>
+	          <input type="password" ng-model="loginData.password">
+	        </label>
+			<button type="submit" class="button button-block button-positive">Log in</button>
+		</form>
+		<div class="padding" ng-show="login_feedback">
+			<p>{{login_feedback}}</p>
+			<p>Please contact <a href="mailto:security@gudhome.com">security@gudhome.com</a> if the problem persists. Thank you.</p>
+		</div>
+		
+	</div>
+  </ion-content>
+</ion-modal-view>

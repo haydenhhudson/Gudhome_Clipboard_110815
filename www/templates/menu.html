@@ -1,0 +1,57 @@
+<ion-side-menus enable-menu-with-back-views="true">
+    <ion-side-menu-content>
+        <ion-nav-bar class="bar-stable">
+            <ion-nav-back-button>
+            </ion-nav-back-button>
+ 
+            <ion-nav-buttons side="right">
+                <button class="button button-icon button-clear ion-navicon" menu-toggle="right">
+                </button>
+            </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view name="menuContent"></ion-nav-view>
+    </ion-side-menu-content>
+ 
+    <ion-side-menu side="right">
+        <ion-header-bar class="bar-stable">
+            <h1 class="title">
+	      	<div ng-hide="pro_name==null">Welcome, {{pro_name}}</div>
+	      </h1>
+        </ion-header-bar>
+        <ion-content>
+            <ion-list>
+            	<ion-item nav-clear menu-close href="#/app/properties">
+                    <i class="icon ion-ios-home-outline"></i> Properties
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/home">
+                    <i class="icon ion-hammer"></i> Projects
+                </ion-item>
+                <!--<ion-item nav-clear menu-close href="#/app/todos">
+                    <i class="icon ion-alert-circled"></i> Hayden's Todos
+                </ion-item>-->
+                
+                 <ion-item nav-clear menu-close href="#/app/contacts">
+                  <i class="icon ion-person-stalker"></i> Contact List
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/inboxtexts">
+                  <i class="icon ion-chatboxes"></i> Text Inbox
+                </ion-item>
+                <!--<ion-item nav-clear menu-close ng-click="reportHours()">
+                  <i class="icon ion-clock"></i> Report hours
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/membershippricing">
+                  <i class="icon ion-bowtie"></i> Membership pricing
+                </ion-item>-->
+                <ion-item nav-clear menu-close ng-click="buildQuote()">
+                  <i class="icon ion-chatbox-working"></i> <i class="icon ion-cash"></i> Text Proposals
+                </ion-item>
+                <ion-item nav-clear menu-close href="#/app/calendar">
+                  <i class="icon ion-calendar"></i> Home Checks
+                </ion-item>
+                <ion-item menu-close ng-click="login()">
+		         <i class="icon ion-unlocked"></i> Login
+		        </ion-item>
+            </ion-list>
+        </ion-content>
+    </ion-side-menu>
+</ion-side-menus>

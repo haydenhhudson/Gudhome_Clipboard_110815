@@ -1,0 +1,172 @@
+<ion-view view-title="Home Check Notes">
+	<ion-content ng-repeat="l in location">
+	<div class="item item-divider" ><h4 class="title"><i class="icon ion-ios-location-outline"></i> 
+		{{l.LOCATION_DESC}} ({{l.ADDRESS}})</h4>
+	</div>
+
+	<div class="list card">
+			<div class="row">
+	        	<div class="col col-75 padding">
+	        		<i class="icon ion-compose"></i> Note(s)
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear button-small" ng-click="showmenotes=true" ng-show="!showmenotes">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear button-small" ng-click="showmenotes=false" ng-show="showmenotes">
+			      <i class="icon ion-minus-circled assertive"></i>
+			    </a>
+    		  </div>
+	        </div>
+	        <div ng-show="showmenotes">
+	        	<div class="row">
+		        	<div class="col col-75 padding">
+		        		<i class="icon ion-edit"></i> Add note
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear button-small" ng-click="showmenote=true" ng-show="!showmenote">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear button-small" ng-click="showmenote=false" ng-show="showmenote">
+				      <i class="icon ion-minus-circled assertive"></i>
+				    </a>
+	    		  </div>
+		        </div>
+				<div ng-show="showmenote">
+					<form ng-submit="addNote(note)">
+					    <label class="item item-input">
+							<textarea rows="5" placeholder="Begin notes with 'I'" ng-model="note.note"></textarea>
+						</label>
+						<button type="submit" class="button button-block button-positive">Add note</button>
+					</form>
+				</div>
+				<ul class="list">
+					<li ng-repeat="note in notes" >
+						<ion-item class="wrap">
+							{{note.NOTE}}
+						</ion-item>
+						<div class="item tabs tabs-secondary tabs-icon-left">
+							<a class="tab-item" ng-click="deleteNote({{note.ROWNUM}})">
+						      <i class="icon ion-trash-a"></i>
+						      Delete Note
+						    </a>
+						    <a class="tab-item" ng-click="customerFacing({{note.ROWNUM}})">
+						      <i class="icon ion-share {{note.SHARE_COLOR}}"></i>
+						      {{note.SHARE_MESSAGE}}
+						    </a>
+						    <a class="tab-item" ng-click="customerAlert({{note.ROWNUM}})">
+						      <i class="icon ion-ios-flag {{note.FLAG_COLOR}}"></i>
+						      {{note.FLAG_MESSAGE}}
+						    </a>
+		 				 </div>
+					</li>
+				</ul>
+			</div>
+		</div>
+	<!--<div class="list card">
+		<div class="item item-divider item-button-right">
+			 <br/>
+			 <i class="icon ion-compose"></i> Note(s):
+    		<button class="button button-outline" ng-click="showmenote=true">
+		      <i class="icon ion-plus-circled"></i>
+		    </button> 
+		</div>
+		<div ng-show="showmenote" class="item item-divider item-button-right">
+			<button class="button button-outline button-assertive" ng-click="showmenote=false">
+		      <i class="icon ion-close-round"></i>
+		    </button> 
+			<form ng-submit="addNote(note)">
+			    <label class="item item-input">
+					<textarea rows="5" placeholder="Begin notes with 'I'" ng-model="note.note"></textarea>
+				</label>
+				<button type="submit" class="button button-block button-positive">Add note</button>
+			</form>
+		</div>
+		<ul class="list">
+			<li ng-repeat="note in notes" >
+				<ion-item class="wrap">
+					{{note.NOTE}}
+				</ion-item>
+				<div class="item tabs tabs-secondary tabs-icon-left">
+					<a class="tab-item" ng-click="deleteNote({{note.ROWNUM}})">
+				      <i class="icon ion-trash-a"></i>
+				      Delete Note
+				    </a>
+				    <a class="tab-item" ng-click="customerFacing({{note.ROWNUM}})">
+				      <i class="icon ion-share {{note.SHARE_COLOR}}"></i>
+				      {{note.SHARE_MESSAGE}}
+				    </a>
+				    <a class="tab-item" ng-click="customerAlert({{note.ROWNUM}})">
+				      <i class="icon ion-ios-flag {{note.FLAG_COLOR}}"></i>
+				      {{note.FLAG_MESSAGE}}
+				    </a>
+ 				 </div>
+			</li>
+		</ul>
+	</div>-->
+	
+	<div class="list card">
+			<div class="row">
+	        	<div class="col col-75 padding">
+	        		<i class="icon ion-images"></i> Photo(s)
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear button-small" ng-click="showmephotos=true" ng-show="!showmephotos">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear button-small" ng-click="showmephotos=false" ng-show="showmephotos">
+			      <i class="icon ion-minus-circled assertive"></i>
+			    </a>
+    		  </div>
+	        </div>
+	        <div ng-show="showmephotos">
+				<a ng-click="showmeaddphoto=true" ng-hide="showmeaddphoto" class="item item-icon-left item-outline item-royal">
+		        	<i class="icon ion-ios-camera"></i>  Add Photo(s)
+		        </a>
+					<div ng-show="showmeaddphoto" class="button-bar">
+						  <a ng-click="takePicture()" class="button button-block button-outline button-royal">
+						  	New photo
+						  </a>
+						  <a ng-click="pickPhoto()" class="button button-block button-outline button-royal">
+						  	Saved photo
+						  </a>
+					</div>
+				<progress max="100" value="{{progress}}"></progress>
+		      	<a ng-repeat="photo in photos" class="item item-thumbnail-left" href="#/app/homechecklocationmedium/{{photo.HC_ID}}/{{photo.LOCATION_ID}}/{{photo.ROWNUM}}">
+			      <img src="{{photo.IMAGE_LINK}}">
+			      <i ng-hide="photo.IMAGE_NOTE">[Add a note]</i>
+			      <p>{{photo.IMAGE_NOTE}}</p>
+			    </a>
+			</div>
+		</div>
+	<!--<div class="list card">
+		<div class="item item-divider">
+			<i class="icon ion-images"></i> Photo(s)
+		</div>
+		<button class="button button-block button-outline button-royal" ng-click="takePicture()"><i class="icon ion-ios-camera"></i>  Take Picture</button>
+  		<progress max="100" value="{{progress}}"></progress>
+      	<a ng-repeat="photo in photos" class="item item-thumbnail-left" href="#/app/homechecklocationmedium/{{photo.HC_ID}}/{{photo.LOCATION_ID}}/{{photo.ROWNUM}}">
+	      <img src="{{photo.IMAGE_LINK}}">
+	      <i ng-hide="photo.IMAGE_NOTE">[Add a note]</i>
+	      <p>{{photo.IMAGE_NOTE}}</p>
+	    </a>
+	</div>-->
+	
+	<div ng-hide="{{l.LOCATION_ID}}==18">
+		<a class="button button-block button-outline button-calm" href="#/app/homechecklocation/{{l.HC_ID}}/{{l.LOCATION_ID}}">
+			<i class="icon ion-arrow-return-right"></i>  Return to location page
+		</a>
+	</div>
+	<div ng-show="{{l.LOCATION_ID}}==18">
+		<a class="button button-block button-outline button-calm" href="#/app/homecheck/{{l.HC_ID}}">
+			<i class="icon ion-arrow-return-right"></i>  Return to home check
+		</a>
+	</div>
+	</ion-content>
+</ion-view>

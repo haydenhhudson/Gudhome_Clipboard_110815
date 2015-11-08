@@ -1,0 +1,424 @@
+<ion-view view-title="Project Service">
+	<ion-content>
+	<div class="item item-divider item-button-right">
+		<h4 class="title"><i class="icon ion-wrench"></i> {{service.T_NAME}}  - {{service.SVC_TYPE_DESC}} </h4>
+			 <div class="row">
+			 		<div class="col col-75 padding">
+		        		<ion-item class="wrap" ng-hide="changename">Name : {{service.SVC_NAME}}</ion-item>
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear" ng-click="showName()">  
+				      <i class="icon ion-gear-b royal"></i>
+				    </a>
+	    		  </div>
+		        </div>
+					<div ng-show="changename">
+					    <form ng-submit="changeName(service)">
+						    <label class="item item-input">
+								<input type="text" placeholder="Change service name" ng-model="service.SVC_NAME">
+						  	</label>
+							<button type="submit" class="button button-block button-positive">Change service Name</button>
+						</form>
+					</div>
+		
+	</div>
+	<div class="list card">
+	 <div class="row">
+ 		<div class="col col-75 padding" ng-show="service.SERVICE_STATE_DESC">
+    		Status : <i class="icon {{service.ICON}}"></i> {{service.SERVICE_STATE_DESC}}
+    	</div>
+    	<div class="col col-75 padding" ng-hide="service.SERVICE_STATE_DESC">
+    		No status specified
+    	</div>
+	 <div class="col">
+	  	<a class="button button-clear" ng-click="StateForm()">  
+	      <i class="icon ion-gear-b royal"></i>
+	    </a>
+	  </div>
+    </div>
+	<div ng-show="showmestatus">
+		<button ng-repeat="action in actions" class="button icon-left {{action.ICON}} button-full button-{{action.COLOR}} button-outline" ng-click="submitAnswer({{action.SERVICE_STATE_ID}})">
+		{{action.SERVICE_STATE_DESC}}
+		</button>
+	</div>
+	</div>
+		
+		<div class="list card">
+			<div class="row">
+			 		<div class="col col-75 padding" ng-show="service.PRICE">
+		        		<i class="icon ion-cash"></i> The bill (before tax) comes to: {{service.PRICE | currency:"$"}} 
+		        		<br/> Markup : {{service.CALC_MARKUP| number:2}} % / Tax : {{service.S_TAX | number:2}} %
+		        	</div>
+		        	<div class="col col-75 padding" ng-hide="service.PRICE">
+		        		<i class="icon ion-cash"></i> No price given
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear" ng-click="showmebill=true" ng-show="!showmebill">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="showmebill=false" ng-show="showmebill">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+	    		  </div>
+		 </div>
+			<div ng-show="showmebill">
+				<div ng-show="gh_cost.category_id==1">
+					<form ng-submit="costService(gh_cost)">
+						<div class="list">
+							<div class="item item-input row">
+								<div class="input-label padding-left col col-67 padding">
+								   <div class="item item-text-wrap">Hourly rate : $ </div>
+								</div>
+								<div class="col">
+									<input type="number" ng-model="gh_cost.unit_cost"> 
+								</div>
+							</div>
+							<div class="item item-input row">
+								<div class="input-label padding-left col col-67 padding">
+								   <div class="item item-text-wrap">Duration (hours):</div>
+								</div>
+								<div class="col">
+									<input type="number" placeholder="{{service.PLACEHOLDER_QTY}}" ng-model="gh_cost.unit_qty" >
+								</div>
+							</div>
+							
+							<div class="item item-input">
+								<div class="input-label">
+								  <i>Suggested price (before tax): $ {{gh_cost.unit_cost  * gh_cost.unit_qty * (1.35) | number:2}}</i>
+								</div>
+							</div>
+							<div class="item item-input row">
+								<div class="input-label padding-left col col-67 padding">
+								   <div class="item item-text-wrap">Final Price (before tax):</div>
+								</div>
+								<div class="col">
+									<input type="number" placeholder="{{service.PLACEHOLDER_PRICE}}" ng-model="gh_cost.price" >
+								</div>
+							</div>
+							<div class="item item-input">
+								<div class="input-label">
+								  <i>Calculated Markup : {{
+								  	((gh_cost.price 
+								  	/ (gh_cost.unit_cost  * gh_cost.unit_qty)
+								  	)-1
+								  	) * 100 | number:2 }} %</i>
+								</div>
+							</div>
+							
+							<div class="item item-input row">
+								<div class="input-label padding-left col col-67 padding">
+								   <div class="item item-text-wrap">Tax (%):</div>
+								</div>
+								<div class="col">
+									<input type="number" placeholder="{{service.PLACEHOLDER_TAX}}" ng-model="gh_cost.tax" >
+								</div>
+								
+							</div>
+						</div>  
+						<button type="submit" class="button button-block button-positive">Apply</button>
+					</form>
+				</div>
+				<div ng-show="gh_cost.category_id==2">
+					<form ng-submit="costService(gh_cost)">
+						<div class="list">
+							<div class="item item-input row">
+								<div class="input-label padding-left col col-67 padding">
+								   <div class="item item-text-wrap">Unit :</div>
+								</div>
+								<div class="col">
+									<input type="text" placeholder="unit" ng-model="gh_cost.unit">
+								</div>
+							</div>
+							<div class="item item-input row">
+								<div class="input-label padding-left col col-67 padding">
+								   <div class="item item-text-wrap">Unit cost : $</div>
+								</div>
+								<div class="col">
+									<input type="number" placeholder="{{service.PLACEHOLDER_COST}}" ng-model="gh_cost.unit_cost">
+								</div>
+							</div>
+							<div class="item item-input row">
+								<div class="input-label padding-left col col-67 padding">
+								   <div class="item item-text-wrap">Unit quantity:</div>
+								</div>
+								<div class="col">
+									<input type="number" placeholder="{{service.PLACEHOLDER_QTY}}" ng-model="gh_cost.unit_qty">
+								</div>
+							</div>
+							
+							<div class="item item-input">
+								<div class="input-label">
+								  <i>Suggested price (before tax): $ {{gh_cost.unit_cost  * gh_cost.unit_qty * (1.35) | number:2}}</i>
+								</div>
+							</div>
+							<div class="item item-input row">
+								<div class="input-label padding-left col col-67 padding">
+								   <div class="item item-text-wrap">Final Price (before tax):</div>
+								</div>
+								<div class="col">
+									<input type="number" placeholder="{{service.PLACEHOLDER_PRICE}}" ng-model="gh_cost.price">
+								</div>
+							</div>
+							<div class="item item-input">
+								<div class="input-label">
+								  <i>Calculated Markup : {{
+								  	((gh_cost.price 
+								  	/ (gh_cost.unit_cost  * gh_cost.unit_qty)
+								  	)-1
+								  	) * 100 | number:2 }} %</i>
+								</div>
+							</div>
+							<div class="item item-input row">
+								<div class="input-label padding-left col col-67 padding">
+								   <div class="item item-text-wrap">Tax (%):</div>
+								</div>
+								<div class="col">
+									<input type="number" placeholder="{{service.PLACEHOLDER_TAX}}" ng-model="gh_cost.tax">
+								</div>
+								
+							</div>
+						</div>  
+						<button type="submit" class="button button-block button-positive">Apply</button>
+					</form>
+				</div>
+				<div ng-show="gh_cost.category_id==3">
+					<form ng-submit="costService(gh_cost)">
+						<div class="list">
+							<div class="item item-input row">
+								<div class="input-label padding-left col col-67 padding">
+								   <div class="item item-text-wrap">Bid price : $</div>
+								</div>
+								<div class="col">
+									<input type="number" placeholder="{{service.PLACEHOLDER_COST}}" ng-model="gh_cost.unit_cost">
+								</div>
+							</div>
+							<div class="item item-input">
+								<div class="input-label">
+								  <i>Suggested price (before tax): $ {{gh_cost.unit_cost  * (1.35) | number:2}}</i>
+								</div>
+							</div>
+							<div class="item item-input row">
+								<div class="input-label padding-left col col-67 padding">
+								   <div class="item item-text-wrap">Final Price (before tax):</div>
+								</div>
+								<div class="col">
+									<input type="number" placeholder="{{service.PLACEHOLDER_PRICE}}" ng-model="gh_cost.price">
+								</div>
+							</div>
+							<div class="item item-input">
+								<div class="input-label">
+								  <i>Calculated Markup : {{
+								  	((gh_cost.price 
+								  	/ (gh_cost.unit_cost)
+								  	)-1
+								  	) * 100 | number:2 }} %</i>
+								</div>
+							</div>
+							<div class="item item-input row">
+								<div class="input-label padding-left col col-67 padding">
+								   <div class="item item-text-wrap">GH cut (%):</div>
+								</div>
+								<div class="col">
+									<input type="number" placeholder="{{service.PLACEHOLDER_CUT}}" ng-model="gh_cost.ghcut" >
+								</div>
+							</div>
+							<div class="item item-input row">
+								<div class="input-label padding-left col col-67 padding">
+								   <div class="item item-text-wrap">Tax (%):</div>
+								</div>
+								<div class="col">
+									<input type="number" placeholder="{{service.PLACEHOLDER_TAX}}" ng-model="gh_cost.tax">
+								</div>
+								
+							</div>
+						</div>  
+						<button type="submit" class="button button-block button-positive">Apply</button>
+					</form>
+				</div>
+			</div>
+		</div>
+		
+		<div class="list card">
+			<div class="item item-divider">
+				Schedule service
+			</div>
+			<div class="row">
+			 		<div class="col col-75 padding" ng-show="service.PRETTY_DATE">
+		        		This service is scheduled for:
+						<i class="icon ion-ios-calendar-outline"></i> 
+						<ion-item class="wrap">{{service.PRETTY_DATE}}
+						<i ng-show="service.SVC_UNIT_QTY"> <br/>{{service.SVC_UNIT_QTY}} {{service.SVC_UNIT}}(s)</i>
+						</ion-item>
+		        	</div>
+		        	<div class="col col-75 padding" ng-hide="service.PRETTY_DATE">
+		        		<i class="icon ion-ios-calendar-outline"></i> Service has not been scheduled
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear" ng-click="showmedate=true" ng-show="!showmedate">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="showmedate=false" ng-show="showmedate">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+	    		  </div>
+		    </div>
+			<!--<a ng-show="service.PRETTY_DATE" ng-click="showmedate=true" class="item item-icon-left">
+				This service is scheduled for:
+				<i class="icon ion-ios-calendar-outline"></i> 
+				<ion-item class="wrap">{{service.PRETTY_DATE}}
+				<i ng-show="service.SVC_UNIT_QTY"> <br/>{{service.SVC_UNIT_QTY}} {{service.SVC_UNIT}}(s)</i>
+				</ion-item>
+				
+		</a>-->
+			<div ng-show="showmedate">
+				<form ng-submit="scheduleService(visit)">
+					<div class="list">
+						<div class="item item-input item-select">
+							<div class="input-label">
+							      Pick date:
+							</div>
+							<label class="item item-input">
+								<input type="date" ng-model="visit.date">
+							</label>
+						</div>
+						<div class="item item-input item-select">
+							<div class="input-label">
+							      Pick time:
+							</div>
+							<label class="item item-input">
+								<input type="time" ng-model="visit.visit_time">
+							</label>
+						</div>
+						<div class="item item-input">
+							<div class="input-label">
+							   Duration (hours):
+							</div>
+							<input type="number" ng-model="visit.visit_duration">
+						</div>	
+					</div>  
+					<button type="submit" class="button button-block button-positive">Schedule service</button>
+				</form>
+			</div>
+		</div>
+		
+		<div class="list card">
+			<div class="item item-divider">
+				Assign service
+			</div>
+			<div class="row">
+			 		<div class="col col-75 padding" ng-show="service.S_ASSIGNED_PRO">
+		        		This service is assigned to:
+						<a class="button button-positive button-outline button-block" href="#/app/contactpro/{{service.S_ASSIGNED_PRO}}">{{service.PRO_FNAME}} {{service.PRO_LNAME}} <i ng-show="service.ORG">({{service.ORG}})</i></a>
+		        	</div>
+		        	<div class="col col-75 padding" ng-hide="service.S_ASSIGNED_PRO">
+		        		<i class="icon ion-person-add"></i> Service has not been assigned
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear" ng-click="showmepro=true" ng-show="!showmepro">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="showmepro=false" ng-show="showmepro">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+	    		  </div>
+		    </div>
+			<!--<a ng-click="showmepro=true" class="item item-icon-left">
+	        	This service is assigned to:
+				<i class="icon ion-person-add"></i> <ion-item class="wrap">{{service.PRO_FNAME}} {{service.PRO_LNAME}} <i ng-show="service.PRO_LNAME">({{service.ORG}})</i></ion-item>
+	   		</a>-->
+			<div ng-show="showmepro">
+				<div class="item item-input-inset">
+			    <label class="item-input-wrapper">
+			    	<i class="icon ion-search placeholder-icon"></i>
+			    	<input type="text" placeholder="Search pros" ng-model="addproquery">
+			    </label>
+			  </div>
+				<button ng-repeat="pro in pros | filter:addproquery" class="button button-block" ng-click="addPro('{{pro.PRO_ID}}')" >
+					<i class="icon ion-person-add"></i> {{pro.PRO_FNAME}} {{pro.PRO_LNAME}} ({{pro.ORG}})
+				</button>
+			</div>
+		</div>
+		
+		<div class="card">
+			<div class="item item-divider">
+				Rate vendor
+			</div>
+			<ul class="list">
+					<li ng-repeat="review in reviews" >
+						<ion-item class="wrap">
+							[Responsiveness: {{review.RESPONSIVE}}, Punctuality: {{review.PUNCTUAL}}, Overall : {{review.OVERALL}}] {{review.NOTES}}
+							<br/><i>-{{review.AUTHOR}}</i>
+						</ion-item>
+					</li>
+			</ul>	
+			<div class="row">
+			 		<div class="col col-75 padding">
+		        		Add a review
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear" ng-click="showmerating=true" ng-show="!showmerating">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="showmerating=false" ng-show="showmerating">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+	    		  </div>
+		    </div>
+			<div ng-show="showmerating">
+				<form ng-submit="ratePro(rating)">
+			    	<div class="item item-input item-select">
+						<div class="input-label">
+						   Pick author:
+						</div>
+						<select ng-model="rating.author">
+					      	<option ng-value="internal">Internal</option>
+					      	<option ng-value="homeowner">Homeowner</option>
+					    </select>
+					</div>
+					<div class="item item-input item-select">
+						<div class="input-label">
+						   Rate responsiveness (how easy is he to get ahold of?):
+						</div>
+						<select ng-model="rating.responsive" required>
+					      	<option ng-repeat="r in ratings" ng-value="{{r.RATING}}">{{r.RATING_DESC}}</option>
+					    </select>
+					</div>
+					<div class="item item-input item-select">
+						<div class="input-label">
+						   Rate punctuality (did he show up on time?):
+						</div>
+						<select ng-model="rating.punctual" required>
+					      	<option ng-repeat="r in ratings" ng-value="{{r.RATING}}">{{r.RATING_DESC}}</option>
+					    </select>
+					</div>
+					<div class="item item-input item-select">
+						<div class="input-label">
+						   Overall rating:
+						</div>
+						<select ng-model="rating.score" required>
+					      	<option ng-repeat="r in ratings" ng-value="{{r.RATING}}">{{r.RATING_DESC}}</option>
+					    </select>
+					</div>
+				    <label class="item item-input">
+						<textarea rows="4" placeholder="Qualify rating" ng-model="rating.story"></textarea>
+				  	</label>
+					<button type="submit" class="button button-block button-positive">Rate pro</button>
+				</form>
+			</div>
+		</div>
+		
+		<a class="button button-block button-outline button-calm" href="#/app/project/{{service.T_ID}}">
+			<i class="icon ion-arrow-return-right"></i>  Return to project
+		</a>
+		
+		
+	</ion-content>
+</ion-view>

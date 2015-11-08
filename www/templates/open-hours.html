@@ -1,0 +1,16 @@
+<ion-view view-title="Open hours">
+  <ion-content>
+	  <label class="item item-input">
+	    <i class="icon ion-search placeholder-icon"></i>
+	    <input type="text" placeholder="Search open hours" ng-model="ohquery">
+	  </label>
+    <ion-list>
+      	<ion-list>
+			<ion-item ng-repeat="oh in openhours | filter:ohquery" href="#/app/reporthours2/{{oh.REPORT_ID}}">
+		        [{{oh.THEDATE}}] {{oh.PRO_FNAME}} / {{oh.VISIT_DURATION}} hour(s) 
+		        <br/> {{oh.ADDRESS}} ({{oh.USER_LNAME}})
+		      </ion-item>
+		</ion-list>
+    </ion-list>
+  </ion-content>
+</ion-view>

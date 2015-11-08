@@ -1,0 +1,523 @@
+<ion-view view-title="Project">
+	<ion-content ng-repeat="p in project">
+		<div class="item item-divider item-button-right">
+	    	<h4 class="title">
+	    		<i class="icon ion-hammer"></i> {{p.T_NAME}}
+	    	</h4>
+		  	<div>
+		  		<a class="button button-positive button-outline button-small" href="#/app/address/{{p.A_ID}}/{{p.PROP_ID}}">  
+			      {{p.ADDRESS}}
+			    </a>
+			</div>
+		</div>
+		
+		<div class="card">
+			<div class="item item-divider">
+				Service request
+			</div>
+			<a ng-click="showRequest()">
+	        	<ion-item class="wrap">
+	        	<div ng-hide="new_note.NOTE.length>0">{{p.SERVICE_REQUEST}}</div>
+	        	</ion-item>
+	        </a>
+			<form ng-show="showmerequest" ng-submit="addRequest(request)">
+			    <label class="item item-input">
+					<textarea rows="8" placeholder="Write in complete sentences." ng-model="request.request"></textarea>
+				</label>
+				<button type="submit" class="button button-block button-positive">Update</button>
+			</form>
+		</div>
+		
+		<div class="list card">
+			<div class="row">
+		 		<div class="col col-75 padding">
+		    		Todos
+		    	</div>
+		    	<div class="col">
+			  	<a class="button button-clear" ng-click="showmetodos=true" ng-show="!showmetodos">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+			  </div>
+			 <div class="col">
+			  	<a class="button button-clear" ng-click="showmetodos=false" ng-show="showmetodos">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+			  </div>
+		    </div>
+		    <div ng-show="showmetodos">
+		    	<div class="item item-input-inset">
+				    <label class="item-input-wrapper">
+				    <i class="icon ion-search placeholder-icon"></i>
+				      <input type="text" placeholder="Search todos" ng-model="todoquery">
+				    </label>
+				    <a class="button button-small button-outline button-balanced" ng-click="showAddTodo()">
+				      <i class="icon ion-plus-circled"></i>
+				    </a>
+				</div>
+				<form ng-submit="addTodo(todo)" ng-show="addtodo">
+				    <label class="item item-input">
+						<textarea rows="5" placeholder="Todo desc" ng-model="todo.todo"></textarea>
+					</label>
+					<button type="submit" class="button button-block button-positive">Add todo</button>
+				</form>
+			        <ion-item ng-repeat="todo in todos | filter:todoquery" href="#/app/todo/{{todo.TODO_ID}}">
+			        	<ion-item class="wrap"> {{todo.TODO_DESC}}</ion-item>
+			      	</ion-item>
+				<div class="row">
+		 		<div class="col col-75 padding">
+		    		Snoozed Todos
+		    	</div>
+		    	<div class="col">
+			  	<a class="button button-clear" ng-click="showmesnoozed=true" ng-show="!showmesnoozed">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+			  </div>
+			 <div class="col">
+			  	<a class="button button-clear" ng-click="showmesnoozed=false" ng-show="showmesnoozed">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+			  </div>
+		    </div>
+			   <div ng-show="showmesnoozed">
+			   		<ion-item ng-repeat="snooze in snoozeds" href="#/app/todo/{{snooze.TODO_ID}}">
+			        	<ion-item class="wrap"> {{snooze.TODO_DESC}}</ion-item>
+			      	</ion-item>
+			   </div>
+			</div>
+	   </div>
+	   
+		<div class="list card">
+			<div class="row">
+		 		<div class="col col-75 padding" ng-show="p.T_STATE_DESC">
+		    		Status : {{p.T_STATE_DESC}}
+		    	</div>
+		    	<div class="col col-75 padding" ng-hide="p.T_STATE_DESC">
+		    		No status specified
+		    	</div>
+		    	<div class="col">
+			  	<a class="button button-clear" ng-click="showmestatus=true" ng-show="!showmestatus">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+			  </div>
+			 <div class="col">
+			  	<a class="button button-clear" ng-click="showmestatus=false" ng-show="showmestatus">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+			  </div>
+		    </div>
+		    <div ng-show="showmestatus">
+				<button ng-repeat="state in states" class="button icon-left button-full button-outline button-positive" ng-click="submitAnswer({{state.T_STATE_ID}})">
+				{{state.T_STATE_DESC}}
+				</button>
+			</div>
+	   </div>
+		
+		<div class="list card">
+	        <div class="row">
+	        	<div class="col col-75 padding">
+	        		<i class="icon ion-ios-list-outline"></i> Punchlist
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear" ng-click="showmepunchlist=true" ng-show="!showmepunchlist">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear" ng-click="showmepunchlist=false" ng-show="showmepunchlist">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+    		  </div>
+	        </div>
+	        <div ng-show="showmepunchlist">
+				<div class="list card">
+					<div class="item item-divider">
+						Labor
+					</div>
+					<a class="item" ng-repeat="labor in labors" class="item item-icon-left" href="#/app/projectservice/{{labor.T_ID}}/{{labor.ROWNUM}}">
+						<i class="icon {{labor.ICON}} {{labor.COLOR}}"></i> {{labor.SVC_NAME}} ({{labor.SVC_TYPE_DESC}})
+				  </a>
+				  <div class="row">
+		        	<div class="col col-75 padding">
+		        		Add labor 
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear" ng-click="showmelabor=true" ng-show="!showmelabor">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="showmelabor=false" ng-show="showmelabor">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+	    		  </div>
+		        </div>
+					<div ng-show="showmelabor">
+						
+					    <form ng-submit="addLabor(service)">
+					    	<div class="item item-input item-select">
+								<div class="input-label">
+								   Pick type:
+								</div>
+								<select ng-model="service.servicetype">
+							      	<option ng-repeat="l in labor_type" ng-value="{{l.SVC_TYPE_ID}}">{{l.SVC_TYPE_DESC}}</option>
+							    </select>
+							</div>
+						    <label class="item item-input">
+								<input type="text" placeholder="Name service" ng-model="service.servicename">
+						  	</label>
+							<button type="submit" class="button button-block button-positive">Add service</button>
+						</form>
+					</div>
+				</div>
+				<div class="list card">
+					<div class="item item-divider">
+						Materials
+					</div>
+					<a class="item" ng-repeat="material in materials" class="item item-icon-left" href="#/app/projectservice/{{material.T_ID}}/{{material.ROWNUM}}">
+						 <i class="icon {{material.ICON}} {{material.COLOR}}"></i> {{material.SVC_NAME}}
+				  </a>
+				   <div class="row">
+		        	<div class="col col-75 padding">
+		        		Add material
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear" ng-click="showmematerial=true" ng-show="!showmematerial">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="showmematerial=false" ng-show="showmematerial">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+	    		  </div>
+		        </div>
+					<div ng-show="showmematerial">
+					    <form ng-submit="addMaterial(service)">
+						    <label class="item item-input">
+								<input type="text" placeholder="Name material" ng-model="service.servicename">
+						  	</label>
+							<button type="submit" class="button button-block button-positive">Add material</button>
+						</form>
+					</div>
+				</div>
+				<div class="list card">
+					<div class="item item-divider">
+						Partner bids
+					</div>
+					<a class="item" ng-repeat="bid in bids" class="item item-icon-left" href="#/app/projectservice/{{bid.T_ID}}/{{bid.ROWNUM}}">
+						 <i class="icon {{bid.ICON}} {{bid.COLOR}}"></i> {{bid.SVC_NAME}} ({{bid.SVC_TYPE_DESC}})
+				  </a>
+				   <div class="row">
+			        	<div class="col col-75 padding">
+			        		Add partner bid
+			        	</div>
+			        	<div class="col">
+					  	<a class="button button-clear" ng-click="showmebid=true" ng-show="!showmebid">  
+					      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+					    </a>
+		    		  </div>
+					 <div class="col">
+					  	<a class="button button-clear" ng-click="showmebid=false" ng-show="showmebid">
+					      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+					    </a>
+		    		  </div>
+			       </div>
+					<div ng-show="showmebid">
+					    <form ng-submit="addBidType(service)">
+					    	<div class="item item-input-inset">
+						    	<label class="item-input-wrapper">
+							    	<i class="icon ion-search placeholder-icon"></i>
+							      <input type="text" placeholder="Search service types" ng-model="service.servicename">
+							    </label>
+							</div>
+						  	<a ng-repeat="b in bid_type | filter:service.servicename" class="button button-block" ng-click="addBid('{{b.SVC_TYPE_ID}}')" >
+								<i class="icon ion-ios-arrow-down"></i> {{b.SVC_TYPE_DESC}}
+							</a>
+							<button type="submit" ng-show="service.servicename" class="button button-block button-positive">Add partner service type</button>
+							
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="list card">
+			<div class="row">
+	        	<div class="col col-75 padding">
+	        		<i class="icon ion-compose"></i> Note(s)
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear" ng-click="showmenotes=true" ng-show="!showmenotes">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear" ng-click="showmenotes=false" ng-show="showmenotes">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+    		  </div>
+	        </div>
+	        <div ng-show="showmenotes">
+	        	<div class="row">
+		        	<div class="col col-75 padding">
+		        		<i class="icon ion-edit"></i> Add note
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear" ng-click="showmenote=true" ng-show="!showmenote">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="showmenote=false" ng-show="showmenote">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+	    		  </div>
+		        </div>
+				<div ng-show="showmenote">
+					<form ng-submit="addNote(note)">
+					    <label class="item item-input">
+							<textarea rows="5" placeholder="Begin notes with 'I'" ng-model="note.note"></textarea>
+						</label>
+						<button type="submit" class="button button-block button-positive">Add note</button>
+					</form>
+				</div>
+				<ul class="list">
+					<li ng-repeat="note in notes" >
+						<ion-item class="wrap">
+							{{note.NOTES}}
+							<br/><i>-{{note.PRO_FNAME}}</i>
+						</ion-item>
+						<div class="item tabs tabs-secondary tabs-icon-left">
+							<a class="tab-item" ng-click="deleteNote({{note.ROWNUM}})">
+						      <i class="icon ion-trash-a"></i>
+						      Delete Note
+						    </a>
+						    <a class="tab-item" ng-click="customerFacing({{note.ROWNUM}})">
+						      <i class="icon ion-share {{note.SHARE_COLOR}}"></i>
+						      {{note.SHARE_MESSAGE}}
+						    </a>
+		 				 </div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div class="list card">
+			<div class="row">
+	        	<div class="col col-75 padding">
+	        		<i class="icon ion-images"></i> Photo(s)
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear" ng-click="showmephotos=true" ng-show="!showmephotos">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear" ng-click="showmephotos=false" ng-show="showmephotos">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+    		  </div>
+	        </div>
+	        <div ng-show="showmephotos">
+				<a ng-click="showmeaddphoto=true" ng-hide="showmeaddphoto" class="item item-icon-left item-outline item-royal">
+		        	<i class="icon ion-ios-camera"></i>  Add Photo(s)
+		        </a>
+					<div ng-show="showmeaddphoto" class="button-bar">
+						  <a ng-click="takePicture()" class="button button-block button-outline button-royal">
+						  	New photo
+						  </a>
+						  <a ng-click="pickPhoto()" class="button button-block button-outline button-royal">
+						  	Saved photo
+						  </a>
+					</div>
+				<progress max="100" value="{{progress}}"></progress>
+		      	<a ng-repeat="photo in photos" class="item item-thumbnail-left" href="#/app/projectmedium/{{photo.T_ID}}/{{photo.ROWNUM}}">
+			      <img ng-src="{{photo.MEDIA_LINK}}">
+			      <i ng-hide="photo.MEDIA_NOTE">[Add a note]</i>
+			      <p>{{photo.MEDIA_NOTE}}</p>
+			    </a>
+			</div>
+		</div>
+		
+		<!--<div class="list card">
+			<div class="row">
+	        	<div class="col col-75 padding">
+	        		<i class="icon ion-clock"></i> Hours
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear" ng-click="showhours=true" ng-show="!showhours">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear" ng-click="showhours=false" ng-show="showhours">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+    		  </div>
+	        </div>
+	        <div ng-show="showhours">
+				<div ng-show="{{p.SUM_HOURS}}" class="padding">
+					You have been assigned {{p.SUM_HOURS}} hour(s) on this project.
+					<button ng-hide="{{p.CREATE_TIMESTAMP.length > 0}}" class="button button-block button-outline button-positive" ng-click="getTexts()">
+						Start timer and get text message reminders
+					</button>
+					<div ng-show="{{p.CREATE_TIMESTAMP}}">
+						<button ng-show="{{p.PAUSED.length>0}}" class="button button-block button-outline button-assertive icon-left ion-play" ng-click="resume()">
+							RESUME
+						</button>
+						<button ng-hide="{{p.PAUSED.length>0}}" class="button button-block button-outline button-assertive icon-left ion-pause" ng-click="pause()">
+							{{p.COMPLETED}}
+						</button>
+						Timer started ({{p.PRETTY_CREATE_TIMESTAMP}}). 
+						<br/>Elapsed time (updates every 5 min): {{p.ELAPSED_HOURS}} hour(s)
+					</div>
+				</div>
+				<div ng-hide="{{p.SUM_HOURS}}" class="padding">
+					<i class="icon ion-sad"></i> You have not been assigned any hours on this project (yet).
+				</div>
+				<div class="item item-divider"></div>
+				<button class="button button-block button-outline button-calm" ng-click="reportHours()">
+					Report hours on this project
+				</button>
+			</div>
+		</div>-->
+			
+		<div class="list card">
+			<div class="row">
+	        	<div class="col col-75 padding">
+	        		<i class="icon ion-cash"></i> Billing
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear" ng-click="billing=true" ng-show="!billing">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear" ng-click="billing=false" ng-show="billing">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+    		  </div>
+	        </div>
+	        <div ng-show="billing">
+	        	<div class="padding">
+	        		Total owed for this project : ${{p.BILL}} (w/o tax)
+	        	</div>
+    		  	<div class="row">
+		        	<div class="col col-75 padding">
+		        		<i class="icon ion-chatbox-working"></i> Text proposal
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear" ng-click="send=true" ng-show="!send">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="send=false" ng-show="send">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+	    		  </div>
+		        </div>
+		        <div class="row">
+		        	<div class="col col-75 padding">
+		        		<i class="icon ion-more"></i> Unapproved proposals
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear" ng-click="unapproved=true" ng-show="!unapproved">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="unapproved=false" ng-show="unapproved">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+	    		  </div>
+		        </div>
+		         <div class="row">
+		        	<div class="col col-75 padding">
+		        		<i class="icon ion-ios-checkmark"></i> Approved proposals
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear" ng-click="theapproved=true" ng-show="!theapproved">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="theapproved=false" ng-show="theapproved">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+	    		  </div>
+		        </div>
+		        <div ng-show="theapproved">
+		        	<ion-list>
+				      <ion-item class="wrap" ng-repeat="ap in approveds" href="#/app/proposal/{{ap.MESSAGE_ID1}}">
+				        ({{ap.PRETTY_CUST_APPROVED_DATE}}) ${{ap.BILL}} for {{ap.PROJ_COUNT}} project(s)
+				      </ion-item>
+				    </ion-list>
+				</div>
+				 <div class="row">
+		        	<div class="col col-75 padding">
+		        		<i class="icon ion-ios-checkmark"></i> Invoices
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear" ng-click="theinvoices=true" ng-show="!theinvoices">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="theinvoices=false" ng-show="theinvoices">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+	    		  </div>
+		        </div>
+		        <div ng-show="theinvoices">
+		        	<ion-list>
+				      <ion-item class="wrap" ng-repeat="inv in invoices" href="#/app/invoice/{{inv.INVOICE_ID}}/{{inv.INSTALLMENT_ID}}">
+				        {{inv.INVOICE_ID}} {{inv.INSTALLMENT_ID}} for ${{inv.INSTALLMENT_AMT}} [Paid so far ${{inv.THIS_PAYMENT}}]
+				      </ion-item>
+				    </ion-list>
+				</div>
+    		</div>
+    	</div>
+    	
+    	<div class="list card">
+			<div class="row">
+	        	<div class="col col-75 padding">
+	        		<i class="icon ion-info"></i> Details
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear" ng-click="details=true" ng-show="!details">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear" ng-click="details=false" ng-show="details">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+    		  </div>
+	        </div>
+	        <div ng-show="details">
+				<ion-item>
+					<ion-item class="wrap">
+						[Service request]: {{p.SERVICE_REQUEST}}
+					</ion-item>
+				</ion-item>
+				<ion-item>
+					<ion-item class="wrap">
+						[Project created by]: {{p.PROJ_AUTHOR}}
+					</ion-item>
+				</ion-item>
+				<ion-item>
+					<ion-item class="wrap">
+						[Project created]: {{p.PROJ_CREATE_DATE}}
+					</ion-item>
+				</ion-item>
+				<ion-item>
+					<ion-item class="wrap">
+						[Project last edited]: {{p.PROJ_LAST_EDIT}}
+					</ion-item>
+				</ion-item>
+			</div>
+		</div>
+	        
+	</ion-content>
+</ion-view>

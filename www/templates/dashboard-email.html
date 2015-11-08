@@ -1,0 +1,27 @@
+<ion-view view-title="Email link to dashboard">
+  <ion-content ng-repeat="e in email">
+	  
+	  	<a class="button button-positive button-outline button-block" href="#/app/contacthomeowner/{{e.A_ID}}/{{e.USER_ID}}">  
+	      Recipient : {{e.USER_FNAME}} {{e.USER_LNAME}}
+	    </a>
+	   <div class="list card">
+	  	<form ng-submit="sendText(thetext)">
+		  <label class="item item-input">
+		  	To email : {{e.EMAIL}}
+		  </label>
+		  <label class="item item-input">
+		    <textarea rows="1" placeholder="Type email subject here" ng-model="thetext.subject"></textarea>
+		  </label>
+		  <label class="item item-input">
+		    <textarea rows="4" placeholder="Type your Message here" ng-model="thetext.message"></textarea>
+		  </label>
+		  
+		  <button type="submit" class="button button-block button-positive"><i class="icon ion-loop"></i> Update</button>
+		</form>
+		
+		<a class="button button-block button-royal" ng-click="openUrl()"><i class="icon ion-eye"></i> Preview</a>
+		<a class="button button-block button-calm" ng-click="sendEmail()"><i class="icon ion-paper-airplane"></i> Send email</a>
+	  </div>
+	  
+  </ion-content>
+</ion-view>

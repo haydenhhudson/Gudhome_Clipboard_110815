@@ -1,0 +1,30 @@
+<ion-view view-title="Device Information">
+    <ion-content>
+        <div class="card">
+            <p>
+		        Group by:
+		        <a ng-click="groupBy( 'gender' )">Gender</a> -
+		        <a ng-click="groupBy( 'hair' )">Hair</a>
+		    </p>
+		 
+		    <!-- BEGIN: Outer ngRepeat. -->
+		    <div ng-repeat="group in groups">
+		 
+		        <h2>
+		            {{ group.label }}
+		        </h2>
+		 
+		        <ul>
+		            <!-- BEGIN: Inner ngRepeat. -->
+		            <li ng-repeat="friend in group.friends">
+		 
+		                {{ friend.name }}
+		 
+		            </li>
+		            <!-- END: Inner ngRepeat. -->
+		        </ul>
+		 
+		    </div>
+        </div>
+    </ion-content>
+</ion-view>

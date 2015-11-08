@@ -1,0 +1,19 @@
+<ion-view view-title="Projects">
+  <ion-content>
+	  <label class="item item-input">
+	    <i class="icon ion-search placeholder-icon"></i>
+	    <input type="text" placeholder="Search projects" ng-model="query">
+	  </label>
+        <div class="row" ng-repeat="project in projects | filter:query">
+	 		<div class="col col-33">
+	    			{{project.ADDRESS}} <div ng-show="blerg"> {{project.CITY}} ({{project.USER_FNAME}} {{project.USER_LNAME}})</div>
+	    			<small>({{project.T_STATE_DESC}})</small>
+	    	</div>
+			 <div class="col col-67">
+			  	<a class="button button-outline button-dark button-small" href="#/app/project/{{project.T_ID}}">
+			      <i class="icon ion-hammer"></i> {{project.T_NAME}}
+			    </a>
+			 </div>
+	    </div>
+  </ion-content>
+</ion-view>

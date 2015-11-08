@@ -1,0 +1,8 @@
+{
+  "name": "HelloIonic",
+  "private": "true",
+  "devDependencies": {
+    "ionic": "driftyco/ionic-bower#master",
+    "platform.js": "platform#~1.3.0"
+  }
+}

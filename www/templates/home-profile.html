@@ -1,0 +1,314 @@
+<ion-view view-title="Home Profile">
+	<ion-content ng-repeat="a in address">
+		<div class="item item-divider" ><h4 class="title"><i class="icon ion-ios-home-outline"></i> {{a.ADDRESS}} ({{a.USER_FNAME}} {{a.USER_LNAME}})</h4></div>
+		
+		<div class="row">
+	 		<div class="col col-75 padding">
+        		 Services
+        	</div>
+        	<div class="col">
+		  	<a class="button button-clear" ng-click="showallservices=true" ng-show="!showallservices">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear" ng-click="showallservices=false" ng-show="showallservices">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+        </div>
+        <div class="row" ng-show="showallservices">
+	 		<div class="col col-75 padding">
+        		<i class="icon ion-chevron-right"></i> Changeables
+        	</div>
+        	<div class="col">
+		  	<a class="button button-clear" ng-click="thechangeables=true" ng-show="!thechangeables">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear" ng-click="thechangeables=false" ng-show="thechangeables">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+        </div>
+        
+		<div ng-show="thechangeables">
+			<!--<div class="item item-divider">
+				<i class="icon ion-ios-loop-strong"></i> Existing changeables
+			</div>-->
+			<label class="item item-input">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Search existing changeables" ng-model="changeablequery">
+			</label>
+			<div class="row" ng-repeat="changeable in changeables | filter:changeablequery">
+		 		<div class="col col-33">
+	 				<div class="button button-clear">
+        				{{changeable.LOCATION_DESC}}
+        			</div>
+	        	</div>
+	        	<div class="col col col-67">
+				  	<a class="button button-outline button-dark button-small" href="#/app/homeprofilechangeable/{{changeable.A_ID}}/{{changeable.PROP_ID}}/{{changeable.INSPECT_ID}}/{{changeable.LOCATION_ID}}/{{changeable.COUNT}}">
+				      <i class="icon icon-small ion-ios-loop-strong"></i> {{changeable.CHANGEABLE_DESC}} <small>{{changeable.PRETTY_COUNT}}</small>
+				    </a>
+    		  	</div>
+	        </div>
+			<div class="row">
+		 		<div class="col col-75 padding">
+	        		<i class="icon ion-plus"></i> Add a changeable
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear" ng-click="showmechangeables=true" ng-show="!showmechangeables">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear" ng-click="showmechangeables=false" ng-show="showmechangeables">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+    		  </div>
+	        </div>
+			<div ng-show="showmechangeables">
+				<div class="item item-input-inset">
+			    <label class="item-input-wrapper">
+			    <i class="icon ion-search placeholder-icon"></i>
+			      <input type="text" placeholder="Search changeables" ng-model="addchangeablequery">
+			    </label>
+			  </div>
+				<button ng-repeat="change in changeablelist | filter:addchangeablequery" class="button button-block" ng-click="addChangeable({{change.INSPECT_ID}})" >
+					<i class="icon ion-plus-circled"></i> {{change.CHANGEABLE_DESC}}
+				</button>
+			</div>
+		</div>
+		<div class="row" ng-show="showallservices">
+	 		<div class="col col-75 padding">
+        		<i class="icon ion-chevron-right"></i> Other Services
+        	</div>
+        	<div class="col">
+		  	<a class="button button-clear" ng-click="other=true" ng-show="!other">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear" ng-click="other=false" ng-show="other">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+        </div>	
+		<div ng-show="other">
+			<!--<div class="item item-divider">
+				<i class="icon ion-speedometer"></i> Existing other services
+			</div>-->
+			<label class="item item-input">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Search existing other services" ng-model="servicequery">
+			</label>
+			<div class="row" ng-repeat="service in services | filter:servicequery">
+		 		<div class="col col-33">
+		 				<ion-item class="small">
+	        				{{service.LOCATION_DESC}}
+	        			</ion-item>
+	        	</div>
+	        	<div class="col col col-67">
+				  	<a class="button button-outline button-dark button-small" href="#/app/homeprofileservice/{{service.A_ID}}/{{service.PROP_ID}}/{{service.INSPECT_ID}}/{{service.LOCATION_ID}}/{{service.COUNT}}">
+				      <i class="icon icon-small ion-speedometer"></i> {{service.INSPECT_DESC}}
+				    </a>
+    		  	</div>
+	        </div>
+			<div class="row" ng-repeat="g in generic | filter:servicequery">
+		 		<div class="col col-33">
+		 				<ion-item class="small">
+	        				{{g.LOCATION_DESC}}
+	        			</ion-item>
+	        	</div>
+	        	<div class="col col col-67">
+				  	<a class="button button-outline button-dark button-small">
+				      <i class="icon icon-small ion-locked"></i> {{g.INSPECT_DESC}} (default)
+				    </a>
+    		  	</div>
+	        </div>
+			<div class="row">
+		 		<div class="col col-75 padding">
+	        		<i class="icon ion-plus"></i> Add a service
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear" ng-click="showmeservices=true" ng-show="!showmeservices">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear" ng-click="showmeservices=false" ng-show="showmeservices">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+    		  </div>
+	        </div>
+			<div ng-show="showmeservices">
+				<div class="item item-input-inset">
+			    <label class="item-input-wrapper">
+			    <i class="icon ion-search placeholder-icon"></i>
+			      <input type="text" placeholder="Search services" ng-model="addservicequery">
+			    </label>
+			  </div>
+				<button ng-repeat="service in servicelist | filter:addservicequery" class="button button-block" ng-click="addService({{service.INSPECT_ID}})" >
+					<i class="icon ion-plus-circled"></i> {{service.INSPECT_DESC}}
+				</button>
+			</div>
+		</div>
+		<div class="item item-divider">
+		</div>
+		<div class="row">
+	 		<div class="col col-75 padding">
+        		 Components
+        	</div>
+        	<div class="col">
+		  	<a class="button button-clear" ng-click="showComp=true" ng-show="!showComp">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear" ng-click="showComp=false" ng-show="showComp">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+        </div>
+		<div ng-show="showComp">
+			<!--<div class="item item-divider">
+				<i class="icon ion-cube"></i> Existing components
+			</div>-->
+			<label class="item item-input">
+				<i class="icon ion-search placeholder-icon"></i>
+				<input type="text" placeholder="Search existing components" ng-model="componentquery">
+			</label>
+			<div class="row" ng-repeat="component in components | filter:componentquery">
+ 				<div class="col col-33">
+		 				<ion-item class="small">
+	        				{{component.LOCATION_DESC}}
+	        			</ion-item>
+	        	</div>
+	        	<div class="col col col-67">
+				  	<a class="button button-outline button-dark button-small" href="#/app/homeprofilecomponent/{{component.A_ID}}/{{component.PROP_ID}}/{{component.COMPONENT_ID}}/{{component.LOCATION_ID}}/{{component.COUNT}}">
+				      <i class="icon icon-small ion-cube"></i> {{component.COMPONENT_DESC}} <small> {{component.PRETTY_COUNT}}</small>
+				    </a>
+    		  	</div>
+	        </div>
+			<div class="row">
+		 		<div class="col col-75 padding">
+	        		<i class="icon ion-plus"></i> Add a component
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear" ng-click="showmecomponents=true" ng-show="!showmecomponents">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear" ng-click="showmecomponents=false" ng-show="showmecomponents">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+    		  </div>
+	        </div>
+			<div ng-show="showmecomponents">
+				<div class="item item-input-inset">
+			    <label class="item-input-wrapper">
+			    	<i class="icon ion-search placeholder-icon"></i>
+			    	<input type="text" placeholder="Search components" ng-model="addcomponentquery">
+			    </label>
+			  </div>
+				<button ng-repeat="comp in componentlist | filter:addcomponentquery" class="button button-block" ng-click="addComponent({{comp.COMPONENT_ID}})" >
+					<i class="icon ion-plus-circled"></i> {{comp.COMPONENT_DESC}}
+				</button>
+			</div>
+		</div>
+		<div class="item item-divider">
+		</div>
+			<div class="row">
+	        	<div class="col col-75 padding">
+	        		<i class="icon ion-compose"></i> Note(s)
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear button-small" ng-click="showmenotes=true" ng-show="!showmenotes">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear button-small" ng-click="showmenotes=false" ng-show="showmenotes">
+			      <i class="icon ion-minus-circled assertive"></i>
+			    </a>
+    		  </div>
+	        </div>
+	        <div ng-show="showmenotes">
+	        	<div class="row">
+		        	<div class="col col-75 padding">
+		        		<i class="icon ion-edit"></i> Add note
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear button-small" ng-click="showmenote=true" ng-show="!showmenote">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear button-small" ng-click="showmenote=false" ng-show="showmenote">
+				      <i class="icon ion-minus-circled assertive"></i>
+				    </a>
+	    		  </div>
+		        </div>
+				<div ng-show="showmenote">
+					<form ng-submit="addNote(note)">
+					    <label class="item item-input">
+							<textarea rows="5" placeholder="Begin notes with 'I'" ng-model="note.note"></textarea>
+						</label>
+						<button type="submit" class="button button-block button-positive">Add note</button>
+					</form>
+				</div>
+				<ul class="list">
+					<li ng-repeat="note in notes" >
+						<ion-item class="wrap">
+							{{note.HC_NOTE}}
+						</ion-item>
+						<div class="item tabs tabs-secondary tabs-icon-left">
+							<a class="tab-item" ng-click="deleteNote({{note.ROWNUM}})">
+						      <i class="icon ion-trash-a"></i>
+						      Delete Note
+						    </a>
+						    <a class="tab-item" ng-click="customerFacing({{note.ROWNUM}})">
+						      <i class="icon ion-share {{note.SHARE_COLOR}}"></i>
+						      {{note.SHARE_MESSAGE}}
+						    </a>
+						    <a class="tab-item" ng-click="customerAlert({{note.ROWNUM}})">
+						      <i class="icon ion-ios-flag {{note.FLAG_COLOR}}"></i>
+						      {{note.FLAG_MESSAGE}}
+						    </a>
+		 				 </div>
+					</li>
+				</ul>
+			</div>
+			<!--<button class="button button-block button-positive button-outline" ng-click="openUrl()">
+		        <i class="icon ion-eye"></i> MyGudhome profile
+		 </button>-->
+		    
+		    <div class="item item-divider">Schedule</div>
+		    <div class="row">
+			 		<div class="col col-50">
+		        	
+		        	</div>
+		        	<div class="col">V1</div>
+		        	<div class="col">V2</div>
+		        	<div class="col">V3</div>
+		        	<div class="col">V4</div>
+		        	
+		       	</div>
+
+				<div class="row" ng-repeat="sch in schedule">
+			 		<div class="col col-50">
+		        		 {{sch.INSPECT_DESC}}
+		        	</div>
+		        	<div class="col"><i class="icon {{sch.VISIT_1_PRETTY}}"></i></div>
+		        	<div class="col"><i class="icon {{sch.VISIT_2_PRETTY}}"></i></div>
+		        	<div class="col"><i class="icon {{sch.VISIT_3_PRETTY}}"></i></div>
+		        	<div class="col"><i class="icon {{sch.VISIT_4_PRETTY}}"></i></div>
+		        	
+		       	</div>
+    <a class="button button-block button-outline button-calm" href="#/app/address/{{a.A_ID}}/{{a.PROP_ID}}">
+		<i class="icon ion-arrow-return-right"></i>  Return to Address page
+	</a>
+	</ion-content>
+</ion-view>

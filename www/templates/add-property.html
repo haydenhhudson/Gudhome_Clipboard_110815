@@ -1,0 +1,23 @@
+<ion-view view-title="Add property">
+	<ion-content >
+	<div class="padding">
+		Add a property for :
+		<div ng-repeat="h in homeowners">
+			<i class="icon ion-chevron-right"></i> {{h.USER_FNAME}} {{h.USER_LNAME}}
+		</div>
+	</div>
+		<form ng-submit="addProperty(theirinfo)">
+		  <div class="list">
+		  <label class="item item-input">
+			<input type="text" ng-model="theirinfo.address" placeholder="Address">
+		  </label>
+		  <label class="item item-input">
+			<input type="text" ng-model="theirinfo.city" placeholder="City">
+		  </label>
+		  <label class="item item-input">
+			<input type="number" ng-model="theirinfo.zip" placeholder="Zip Code">
+		  </label>
+		<button type="submit" class="button button-block button-positive"><i class="icon ion-plus"></i> Add property</button>
+		</form>
+	</ion-content>
+</ion-view>

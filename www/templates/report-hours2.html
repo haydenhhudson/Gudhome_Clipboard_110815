@@ -1,0 +1,146 @@
+<ion-view view-title="Submit today's hours">
+	<ion-content ng-repeat="r in report">
+	
+	<div class="list card">
+			<div class="item item-divider">
+				Step 1 : Pick property
+			</div>
+		        <a ng-click="showmeloc=true" class="item item-icon-left">
+		        	<i class="icon ion-ios-location-outline"></i> Chosen property : <ion-item class="wrap">{{r.ADDRESS}}, {{r.CITY}}</ion-item>
+		        </a>
+		        
+	</div>
+	
+	<div class="card">
+		<div class="item item-divider">
+			Step 2 : Specify organization
+		</div>
+		<a ng-hide="r.ORG || new_org.ORG.length>0" ng-click="showOrg()" class="item item-icon-left">
+        	<i class="icon ion-help-circled"></i> No organization chosen.
+        </a>
+        <a ng-show="r.ORG || new_org.ORG.length>0" ng-click="showOrg()" class="item item-icon-left">
+        	<i class="icon ion-flag"></i> Chosen organization : 
+        	<ion-item class="wrap">
+        	<div ng-hide="new_org.ORG.length>0">{{r.ORG}}</div>
+        	<div>{{new_org.ORG}}</div>
+        	</ion-item>
+        </a>
+		<div class="list" ng-hide="(r.ORG || new_org.ORG) && !showmeorg"> <!--r.ORG && !showmeorg && {{new_org.ORG}}-->
+			<button class="button icon-left ion-flag button-full button-dark button-outline" ng-click="pickOrg('CMM')">
+			  CMM
+			</button>
+			<button class="button icon-left ion-flag button-full button-dark button-outline" ng-click="pickOrg('Gudhome')">
+			  Gudhome
+			</button>
+  		</div>
+	</div>
+	
+	<div class="card">
+		<div class="item item-divider">
+			Step 3 : Pick task type
+		</div>
+		<ion-item ng-hide="r.TASK_TYPE_DESC || ttype.TASK_TYPE_DESC.length>0" class="item item-icon-left">
+        	<i class="icon ion-help-circled"></i> No task type chosen.
+        </ion-item>
+		<a ng-show="r.TASK_TYPE_DESC || ttype.TASK_TYPE_DESC.length>0" ng-click="showTypes()" class="item item-icon-left">
+        	<i class="icon ion-gear-a"></i> Chosen task type : 
+        	<ion-item class="wrap">
+	        	<div ng-hide="ttype.TASK_TYPE_DESC.length>0">{{r.TASK_TYPE_DESC}} </div>
+	        	<div>{{ttype.TASK_TYPE_DESC}}</div>
+        	</ion-item>
+        </a>
+		<div ng-hide="(r.TASK_TYPE_DESC || ttype.TASK_TYPE_DESC) && !showmetypes">
+			<button ng-repeat="type in types" class="button icon-left ion-gear-a button-full button-dark button-outline" ng-click="pickType('{{type.TASK_TYPE_ID}}')">
+			  {{type.TASK_TYPE_DESC}}
+			</button>
+		</div>
+	</div>
+	
+	<div class="card">
+		<div class="item item-divider">
+			Step 4 : Pick Gudhome project
+		</div>
+		<ion-item ng-hide="r.T_ID || new_proj.T_NAME.length>0" class="item item-icon-left">
+        	<i class="icon ion-help-circled"></i> No project chosen.
+        </ion-item>
+		<a ng-show="r.T_ID || new_proj.T_NAME.length>0" ng-click="showProjects()" class="item item-icon-left">
+        	<i class="icon ion-wrench"></i> Chosen project : 
+        	<ion-item class="wrap">
+	        	<div ng-hide="new_proj.T_NAME.length>0">{{r.T_NAME}}</div>
+	        	<div>{{new_proj.T_NAME}}</div>
+        	</ion-item>
+        </a>
+		<div ng-hide="(r.T_ID || new_proj.T_NAME) && !showmeprojects">
+			<label class="item item-input">
+			    <i class="icon ion-search placeholder-icon"></i>
+			    <input type="text" placeholder="Search projects" ng-model="proj">
+			  </label>
+			<button ng-hide="proj" class="button icon-left ion-wrench button-full button-dark button-outline" ng-click="pickProject('NA')">
+			  Not applicable
+			</button>
+			<button ng-repeat="project in projects | filter:proj" class="button icon-left ion-wrench button-full button-dark button-outline" ng-click="pickProject('{{project.T_ID}}')">
+			  {{project.T_NAME}}
+			</button>
+		</div>
+	</div>
+	
+	<div class="card">
+		<div class="item item-divider">
+			Step 5 : Specify duration
+		</div>
+		<ion-item ng-hide="r.VISIT_DURATION || new_duration.VISIT_DURATION.length>0" class="item item-icon-left">
+        	<i class="icon ion-help-circled"></i> No duration specified.
+        </ion-item>
+		<a ng-show="r.VISIT_DURATION || new_duration.VISIT_DURATION.length>0" ng-click="showDuration()" class="item item-icon-left">
+        	<i class="icon ion-clock"></i> Duration : 
+        	<ion-item class="wrap">
+        	<i ng-hide="new_duration.VISIT_DURATION.length>0">{{r.VISIT_DURATION}}</i>
+        	<i>{{new_duration.VISIT_DURATION}} </i> hour(s)
+        	</ion-item>
+        </a>
+		<form ng-hide="(r.VISIT_DURATION || new_duration.VISIT_DURATION) && !showmeduration" ng-submit="specifyTime(visit)">
+			<div class="list">
+				
+				<div class="item item-input ">
+					 <i class="icon ion-clock"></i>
+					<div class="input-label padding-left">
+					     Duration (hours):
+					</div>
+					<input type="number" placeholder="0.00" ng-model="visit.visit_duration">
+				</div>	
+			</div>  
+			<button type="submit" class="button button-block button-positive">Submit</button>
+		</form>
+	</div>
+	
+	<div class="card">
+		<div class="item item-divider">
+			Step 6 : Add note
+		</div>
+		<ion-item ng-hide="r.NOTE || new_note.NOTE" class="item item-icon-left">
+        	<i class="icon ion-help-circled"></i> No note provided.
+        </ion-item>
+		<a ng-show="r.NOTE || new_note.NOTE" ng-click="showNote()" class="item item-icon-left">
+        	<i class="icon ion-edit"></i> 
+        	<ion-item class="wrap">
+        	<div ng-hide="new_note.NOTE.length>0">{{r.NOTE}}</div>
+        	<div>{{new_note.NOTE}}</div>
+        	</ion-item>
+        </a>
+		<form ng-hide="(r.NOTE || new_note.NOTE) && !showmenote" ng-submit="addNote(note)">
+		    <label class="item item-input">
+				<textarea rows="5" placeholder="Write in complete sentences." ng-model="note.note"></textarea>
+			</label>
+			<button type="submit" class="button button-block button-positive">Update</button>
+		</form>
+	</div>
+		<a class="button button-block button-outline button-calm" href="#/app/reporthours">
+			<i class="icon ion-arrow-return-right"></i>  Done! See time card
+		</a>
+		<br/><br/>
+		<a class="button button-block button-outline button-assertive" ng-click="deleteHours()">
+			<i class="icon ion-trash-a"></i>  Delete entry
+		</a>
+    	
+	</ion-content>
+</ion-view>

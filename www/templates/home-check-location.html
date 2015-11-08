@@ -1,0 +1,29 @@
+<ion-view view-title="Home Check Location">
+	<ion-content>
+	<div class="item item-divider" ><h4 class="title"><i class="icon ion-ios-location-outline"></i> 
+		{{location.LOCATION_DESC}} ({{location.ADDRESS}})</h4>
+	</div>
+		<label class="item item-input">
+			<i class="icon ion-search placeholder-icon"></i>
+			<input type="text" placeholder="Search services" ng-model="servicequery">
+		</label>
+		<a ng-repeat="inspection in inspections | filter:servicequery" href="#/app/homecheckinspection/{{inspection.HC_ID}}/{{inspection.LOCATION_ID}}/{{inspection.INSPECT_ID}}/{{inspection.COUNT}}" class="item item-icon-left">
+			<i class="icon {{inspection.ICON}} {{inspection.COLOR}}"></i>
+			
+			<ion-item class="wrap">
+				{{inspection.INSPECT_DESC}} {{inspection.PRETTY_COUNT}}
+				<span class="badge badge-calm">{{inspection.CONTENT_COUNT}}</span>
+			</ion-item>
+		</a>
+		<a href="#/app/homechecklocationnotes/{{location.HC_ID}}/{{location.LOCATION_ID}}" class="item item-icon-left">
+		<!--	<i class="icon ion-edit"></i>
+			<ion-item class="wrap">
+				Misc. notes ({{location.LOCATION_DESC}})
+				<span class="badge badge-calm">{{location.CONTENT_COUNT}}</span>
+			</ion-item>
+		</a>-->
+	<a class="button button-block button-outline button-calm" href="#/app/homecheck/{{location.HC_ID}}">
+		<i class="icon ion-arrow-return-right"></i>  Return to main Home Check page
+	</a>
+	</ion-content>
+</ion-view>

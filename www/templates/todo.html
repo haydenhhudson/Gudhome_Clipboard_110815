@@ -1,0 +1,56 @@
+<ion-view view-title="Todo">
+  <ion-content ng-repeat="t in todo">
+	  <div class="item item-divider">
+	  	<a class="button button-positive button-outline button-small" href="#/app/project/{{todo.T_ID}}">  
+	     <ion-item class="wrap">Project: {{todo.T_NAME}}</ion-item>
+	    </a>
+	    {{todo.ADDRESS}}
+	  </div>
+	  <div class="row">
+		 		<div class="col col-75 padding">
+		 			<ion-item class="wrap">
+		    		Todo: {{todo.TODO_DESC}}
+		    		</ion-item>
+		    	</div>
+		    	<div class="col">
+			  	<button class="button button-clear" ng-click="editTodoShow()">  
+			      <i class="icon ion-gear-b positive"></i>
+			    </button>
+			  </div>
+		    </div>
+		<div ng-show="showmeedit">
+			<form ng-submit="editTodo(todo)">
+			    <label class="item item-input">
+					<textarea rows="5" placeholder="Todo desc" ng-model="todo.TODO_DESC"></textarea>
+				</label>
+				<button type="submit" class="button button-block button-positive">Update description</button>
+			</form>
+		</div>
+	  	
+	  	<a class="button button-block button-outline button-positive" ng-click="showSnooze()">
+			<i class="icon ion-android-cloud-circle"></i>  Snooze
+		</a>
+	  <div ng-show="showmesnooze">
+		<form ng-submit="snoozeTodo(snooze)">
+			<div class="list">
+				<!--<div class="item item-input item-select">-->
+					<div class="input-label">
+					      Snooze until:
+					</div>
+					<label class="item item-input">
+						<input type="date" ng-model="snooze.date">
+					</label>
+				<!--</div>	-->
+			</div>  
+			<button type="submit" class="button button-block button-positive">Snooze Todo</button>
+		</form>
+	</div>
+	<a class="button button-block button-outline button-calm" ng-click="closeTodo()">
+		<i class="icon ion-checkmark-circled"></i>  Close
+	</a>
+	<br/><br/>
+	<button class="button icon-left button-full button-outline button-royal" ng-click="nextTodo('{{t.NEXT_TO_DO}}')">
+		<i class="icon ion-arrow-right-c"></i> Next 
+	</button>
+  </ion-content>
+</ion-view>

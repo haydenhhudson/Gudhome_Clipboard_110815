@@ -1,0 +1,29 @@
+<ion-view view-title="Add customer">
+	<ion-content >
+	<div class="padding">
+		Alert : Do not use this form to add customers that belong to *existing* properties
+	</div>
+		<form ng-submit="addCustomer(theirinfo)">
+		  <div class="list">
+		  <label class="item item-input">
+		<input type="text" ng-model="theirinfo.fname" placeholder="First Name">
+		  </label>
+		  <label class="item item-input">
+		<input type="text" ng-model="theirinfo.lname" placeholder="Last Name">
+		  </label>
+		  <label class="item item-input">
+		<textarea ng-model="theirinfo.comments" placeholder="Comments"></textarea>
+		  </label>
+		  <div class="item item-input item-select">
+				<div class="input-label">
+				  Status
+				</div>
+				<select ng-model="theirinfo.thestatus">
+					<option ng-repeat="status in stati" value="{{status.A_STATE_ID}}">{{status.A_STATE_DESC}}</option>
+				</select>
+			</div>
+		</div>
+		<button type="submit" class="button button-block button-positive"><i class="icon ion-person-add"></i> Add customer</button>
+		</form>
+	</ion-content>
+</ion-view>

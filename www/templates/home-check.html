@@ -1,0 +1,60 @@
+<ion-view view-title="Home Check">
+	<ion-content >
+	<div  class="item item-divider" ><h4 class="title"><i class="icon ion-ios-home-outline"></i> 
+		{{hcid.ADDRESS}} (due : {{hcid.PRETTY_DATE_OF_VISIT}})</h4>
+	</div>
+	 <label class="item item-input">
+	    <i class="icon ion-search placeholder-icon"></i>
+	    <input type="text" placeholder="Search locations" ng-model="query">
+	  </label>
+	<ion-item ng-repeat="location in locations | filter:query" ng-show="location.HC_ID" href="#/app/homechecklocation/{{location.HC_ID}}/{{location.LOCATION_ID}}">
+        <i class="icon ion-ios-location-outline"></i> {{location.LOCATION_DESC}} <span class="badge badge-{{location.PRETTY_COLOR}}">{{location.ANS_CNT}}/{{location.CNT}}</span>
+    </ion-item>
+    <!--<a href="#/app/homechecklocationnotes/{{hcid.HC_ID}}/18" class="item item-icon-left">
+			<i class="icon ion-edit"></i>
+			<ion-item class="wrap">
+				Misc. notes (Whole House)
+				<span class="badge badge-calm">{{hcid.NOTE_COUNT}}</span>
+			</ion-item>
+	</a>-->
+    <a class="button button-block button-outline button-calm" ng-show="hcid.A_ID" href="#/app/address/{{hcid.A_ID}}/{{hcid.PROP_ID}}">
+		<i class="icon ion-arrow-return-right"></i>  Return to Address page
+	</a>
+	<!--<a class="button button-block button-outline button-positive" ng-click="openUrl('{{hcid.HC_ID}}')">
+		<i class="icon ion-eye"></i>  Customer-facing view
+	</a>
+	<a class="button button-block button-outline button-assertive" ng-click="closeHomeCheck()"><i class="icon ion-locked"></i> Mark Home Check as Complete</a>-->
+	
+	<div class="list card">
+			<div class="row">
+		 		<div class="col col-75 padding">
+		    		Status : {{hcid.HC_STATE_DESC}}
+		    	</div>
+		    	<div class="col">
+			  	<a class="button button-clear" ng-click="showmestatus=true" ng-show="!showmestatus">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+			  </div>
+			 <div class="col">
+			  	<a class="button button-clear" ng-click="showmestatus=false" ng-show="showmestatus">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+			  </div>
+		    </div>
+		    <div ng-show="showmestatus">
+				<button ng-repeat="state in states" class="button icon-left button-full button-outline button-positive" ng-click="submitAnswer({{state.HC_STATE_ID}})">
+				{{state.HC_STATE_DESC}}
+				</button>
+			</div>
+	</div>
+	
+	
+	   
+	   <div class="list card">
+	   	<div class="item item-divider">Materials</div>
+	   		<ion-item ng-repeat="mt in materials">
+	        	<ion-item> {{mt.CHANGEABLE_DESC}}, {{mt.SPEC_DESC}} ({{mt.SPEC_CNT}})</ion-item>
+	      	</ion-item>
+	   </div>
+	</ion-content>
+</ion-view>

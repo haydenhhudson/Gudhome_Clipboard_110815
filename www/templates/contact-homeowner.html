@@ -1,0 +1,141 @@
+<ion-view view-title="Contact Customer">
+  <ion-content ng-repeat="h in homeowner">
+	  <div class="card padding">
+	       <i class="icon ion-person"></i> Name : {{h.USER_FNAME}} {{h.USER_LNAME}} {{h.PRIMARY_USER}}
+	</div>
+	
+	<div class="list card">
+		<div class="item item-divider">
+	       Properties
+	   </div>
+	   <ion-list>
+			<ion-item ng-repeat="address in addresses" href="#/app/address/{{address.A_ID}}/{{address.PROP_ID}}">
+				<ion-item class="wrap">
+					<i class="icon ion-ios-home-outline"></i> {{address.ADDRESS}}, {{address.CITY}}, {{address.ZIP}}
+				</ion-item>
+			</ion-item>
+		</ion-list>
+		<ion-item href="#/app/addproperty/{{h.A_ID}}">
+			<i class="icon ion-plus"></i> Add new property
+		</ion-item>
+	</div>
+	
+	<div class="list card">
+		<div class="item item-divider">
+	       Phone number(s)
+	   </div>
+			<div class="row" ng-repeat="ph in phonenbrs">
+			  <div class="col col-75 padding" >
+			  	{{ph.PHONE_TYPE_DESC}} : {{ph.PRETTY_CELL_NUMBER}}
+			  </div>
+			  <div class="col">
+			  	<a class="button button-positive button-small" ng-click="openUrl('{{ph.PHONENBR}}')">
+			      <i class="icon ion-ios-telephone"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-balanced button-small" href="#/app/texthomeowner/{{ph.PHONENBR}}">
+			      <i class="icon ion-chatbox"></i>
+			    </a>
+    		  </div>
+			</div>
+			<div class="item item-divider">
+	   		</div>
+			<div class="row">
+	        	<div class="col col-75 padding">
+	        		Add new phone number
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear button-small" ng-click="showmenbr=true" ng-show="!showmenbr">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear button-small" ng-click="showmenbr=false" ng-show="showmenbr">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+    		  </div>
+	        </div>
+		<form ng-show="showmenbr" ng-submit="addPhonenbr(phone)">
+			<div class="list">
+				<label class="item item-input item-stacked-label">
+				    <span class="input-label">Phonenbr</span>
+				    <input type="tel" placeholder="Enter only the digits." ng-model="phone.nbr">
+				</label>
+				<div class="item item-input item-select">
+					<div class="input-label">
+					  Type
+					</div>
+					<select ng-model="phone.thetype">
+						<option ng-repeat="phtype in phonetypes" value="{{phtype.PHONE_TYPE_ID}}">{{phtype.PHONE_TYPE_DESC}}</option>
+					</select>
+				</div>	
+			</div>  
+			<button type="submit" class="button button-block button-positive">Add new phone number</button>
+		</form>
+	</div>
+	
+	<div class="list card">
+		<div class="item item-divider">
+	       Email(s)
+	   </div>
+			<div class="row" ng-repeat="e in emails">
+			  <div class="col col-75 padding" >
+			  	{{e.EMAIL}}
+			  </div>
+			 <div class="col">
+			  	<!--<a class="button button-balanced button-small" href="#/app/emailhomeowner/{{e.EMAIL}}">
+			      <i class="icon ion-android-mail"></i>
+			   </a>-->
+    		  </div>
+			</div>
+		<div class="item item-divider">
+	   </div>
+		<!--<div class="row">
+	        	<div class="col col-75 padding">
+	        		Add new email
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear button-small" ng-click="showmeemail=true" ng-show="!showmeemail">  
+			      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear button-small" ng-click="showmeemail=false" ng-show="showmeemail">
+			      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+			    </a>
+    		  </div>
+	    </div>
+		<form ng-show="showmeemail" ng-submit="addEmail(email)">
+			<div class="list">
+				<label class="item item-input item-stacked-label">
+				    <span class="input-label">Email</span>
+				    <input type="text" placeholder="Type email" ng-model="email.address">
+				</label>
+			</div>  
+			<button type="submit" class="button button-block button-positive">Add new email</button>
+		</form>-->
+	</div>
+	
+	<a class="button button-block button-outline button-calm" ng-click="email_dashboard()">
+		<i class="icon ion-arrow-return-right"></i>  Send link to dashboard
+	</a>
+	
+	<div class="list card">
+		<div class="item item-divider">
+	       Additional users
+	   </div>
+	   <ion-list>
+			<ion-item ng-repeat="user in users" href="#/app/contacthomeowner/{{user.A_ID}}/{{user.USER_ID}}">
+				<ion-item class="wrap">
+					<i class="icon ion-person"></i> {{user.USER_FNAME}} {{user.USER_LNAME}} {{user.PRIMARY_USER}}
+				</ion-item>
+			</ion-item>
+		</ion-list>
+		<!--<ion-item href="#/app/adduser/{{h.A_ID}}">
+			<i class="icon ion-plus"></i> Add new user
+		</ion-item>-->
+	</div>
+	
+  </ion-content>
+</ion-view>

@@ -1,0 +1,35 @@
+<ion-view view-title="Text Homeowner">
+  <ion-content ng-repeat="h in homeowner">
+	  
+	  	<a class="button button-positive button-outline button-block" href="#/app/contacthomeowner/{{h.A_ID}}/{{h.USER_ID}}">  
+	      Recipient : {{h.USER_FNAME}} {{h.USER_LNAME}}
+	    </a>
+	   <div class="list card">
+	  	<form ng-submit="sendText(thetext)">
+		  <label class="item item-input">
+		  	To cell # : {{h.PRETTY_CELL_NUMBER}}
+		  	<input type="hidden" ng-model="thetext.tph" value="{{h.CELL_NUMBER}}">
+		  </label>
+		  <label class="item item-input">
+		    <textarea rows="4" placeholder="Type your Message here" ng-model="thetext.message"></textarea>
+		  </label>
+		  <button type="submit" class="button button-block button-positive"><i class="icon ion-paper-airplane"></i> Send text</button>
+		</form>
+	  </div>
+	  <a ng-repeat="ht in homeowner_texts" ng-show="{{ht.NUMBER_OF_INTEREST}}" class="item item-icon-{{ht.ALIGNMENT}}">
+			<div class="padding">[{{ht.PRETTY_DATE}}] {{ht.FROM_NAME}} wrote <i ng-show="{{ht.CSS_CLASS.length}}<4"> to {{ht.TO_NAME}}</i>:</div>
+			<ion-item class="us" ng-show="{{ht.CSS_CLASS.length}}<4">
+				{{ht.TEXT_CONTENT}}
+				<!--<div class="item item-image" ng-show="{{ht.MEDIA_LINK}}">
+					<img ng-src="{{pt.MEDIA_LINK}}">
+				</div>-->
+			</ion-item>
+			<ion-item class="them" ng-show="{{ht.CSS_CLASS.length}}>2">
+				{{ht.TEXT_CONTENT}}
+				<!--<div class="item item-image" ng-show="{{ht.MEDIA_LINK}}">
+					<img ng-src="{{pt.MEDIA_LINK}}">
+				</div>-->
+			</ion-item>
+		</a>
+  </ion-content>
+</ion-view>

@@ -1,0 +1,74 @@
+<ion-view view-title="Billing">
+  <ion-content ng-repeat="ps in proposal">
+  	<div class="card">
+	  	<div class="item item-divider item-text-wrap">
+	  		This proposal covers the following project(s):
+	  	</div>
+		<ion-list>
+			<ion-item ng-repeat="p in projects" href="#/app/project/{{p.T_ID}}">
+				<ion-item class="wrap">
+					<i class="icon ion-hammer"></i> {{p.T_NAME}} for ${{p.BILL}} (tax included)
+				</ion-item>
+			</ion-item>
+		</ion-list>
+	</div>
+	<div class="card padding" ng-repeat="tb in ttl_bill">
+		TOTAL: {{tb.TTL_BILL}}
+	</div>
+	<button class="button button-block button-positive button-outline" ng-click="openUrl('{{ps.MESSAGE_ID}}')">
+        <i class="icon ion-eye"></i> View sent proposal
+    </button>
+    
+    <div class="item item-divider">
+    	Invoicing
+    </div>
+    
+    <div class="row">
+    	<div class="col col-75 padding">
+    		<i class="icon ion-cash"></i> Create Invoice
+    	</div>
+    	<div class="col">
+	  	<a class="button button-clear" ng-click="invoicing=true" ng-show="!invoicing">  
+	      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+	    </a>
+	  </div>
+	 <div class="col">
+	  	<a class="button button-clear" ng-click="invoicing=false" ng-show="invoicing">
+	      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+	    </a>
+	  </div>
+    </div>
+    <div ng-show="invoicing">
+	    <form ng-submit="createInvoice(proposal)">
+	    	<div class="item item-input">
+				<div class="input-label">
+				   Specify installment count:
+				</div>
+			</div>
+		    <label class="item item-input">
+				<input type="number" ng-model="proposal.count">
+		  	</label>
+	    	<div class="item item-input">
+				<div class="input-label">
+				   Specify installment amount:
+				</div>
+			</div>
+		    <label class="item item-input">
+				<input type="number" placeholder="$" ng-model="proposal.installment">
+		  	</label>
+			<button type="submit" class="button button-block button-positive">Create Invoice</button>
+		</form>
+	</div>
+	<div class="item item-divider">
+    	Unsent invoices
+    </div>
+	<div ng-show="{{ps.INVOICE_ID.length>0}}">
+		 <div class="card" ng-repeat="invoice in invoices">
+	    	<div class="padding">Installment #{{invoice.INSTALLMENT_ID}} (${{invoice.INSTALLMENT_AMT}})</div>
+	    	 <a class="button button-block button-dark button-outline" href="#/app/invoice/{{invoice.INVOICE_ID}}/{{invoice.INSTALLMENT_ID}}">
+		        <i class="icon ion-gear-b"></i> Edit / Preview / Send
+		    </a>
+	   </div>
+   </div>
+  </ion-content>
+</ion-view>

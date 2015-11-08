@@ -1,0 +1,29 @@
+<ion-view view-title="Project Photo">
+	<ion-content>
+		<div class="item item-divider item-button-right">
+			<h4 class="title"><i class="icon ion-ios-location-outline"></i> {{project.T_NAME}}</h4>
+		</div>
+		<div class="list card">
+			<!--<a ng-click="noteForm()" class="item item-icon-left">
+		        	<i class="icon ion-compose"></i>  Note : 
+		        	<ion-item class="wrap">
+		        		<div></div>
+					</ion-item>
+		      
+		        	<div ng-show="showmenote">
+					    <form ng-submit="addNote(note)">
+						    <label class="item item-input">
+								<textarea rows="5" placeholder="Write in complete sentences" ng-model="note.note"></textarea>
+							</label>
+							<button type="submit" class="button button-block button-positive">Update</button>
+						</form>
+					</div>-->
+			<div class="item item-image">
+		    	<img ng-src="data:image/jpeg;base64,{{image}}">
+			</div>
+		</div>
+		<!--<a class="button button-block button-outline button-assertive" ng-click="deletePhoto()">
+			<i class="icon ion-trash-a"></i>  Delete photo
+		</a>-->
+	</ion-content>
+</ion-view>

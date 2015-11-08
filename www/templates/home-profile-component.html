@@ -1,0 +1,185 @@
+<ion-view view-title="Component">
+	<ion-content ng-repeat="c in component">
+		<div class="item item-divider item-button-right">
+			<h4 class="title"><i class="icon ion-ios-loop-strong"></i> {{c.COMPONENT_DESC}} {{c.PRETTY_COUNT}}</h4>
+		</div>
+		
+		<div class="row">
+	 		<div class="col col-75 padding">
+	    		<i class="icon ion-ios-location-outline"></i> Location : {{c.LOCATION_DESC}}
+	    	</div>
+	    	<div class="col">
+		  	<a class="button button-clear button-small" ng-click="showmeloc=true" ng-show="!showmeloc">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear button-small" ng-click="showmeloc=false" ng-show="showmeloc">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+	    </div>
+	    <div ng-show="showmeloc">
+		    <form ng-submit="brandNewLocation(locationname)">
+			    <label class="item item-input">
+					<input type="text" placeholder="Type location" ng-model="locationname.newlocation">
+			  	</label>
+			  	<a ng-repeat="location in locations | filter:locationname.newlocation" class="item item-icon-left" ng-click="changeLocation({{location.LOCATION_ID}})" >
+					 <i class="icon ion-log-in"></i> {{location.LOCATION_DESC}} 
+				</a>
+				<button type="submit" class="button button-block button-positive">Add new location</button>
+			</form>
+		</div>
+		<div class="row">
+	 		<div class="col col-75 padding">
+	    		<i class="icon ion-pricetag"></i> Make : 
+		        	<ion-item class="wrap">
+		        		<div ng-hide="new_make.receivedMAKE">{{c.MAKE_DESC}}</div> {{new_make.receivedMAKE}}
+		        	</ion-item>
+	    	</div>
+	    	<div class="col">
+		  	<a class="button button-clear button-small" ng-click="showmemake=true" ng-show="!showmemake">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear button-small" ng-click="showmemake=false" ng-show="showmemake">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+	    </div>
+    	<div ng-show="showmemake">
+		    <form ng-submit="brandNewMake(makename)">
+			    <label class="item item-input">
+					<input type="text" placeholder="Type make" ng-model="makename.newmake">
+			  	</label>
+			  	<a ng-repeat="make in makes | filter:makename.newmake" class="item item-icon-left" ng-click="changeMake({{make.MAKE_ID}})" >
+					 <i class="icon ion-log-in"></i> {{make.MAKE_DESC}} 
+				</a>
+				<button type="submit" class="button button-block button-positive">Add new make</button>
+			</form>
+		</div>
+		<div class="row">
+	 		<div class="col col-75 padding">
+	    		<i class="icon ion-pricetags"></i> Model : 
+		        	<ion-item class="wrap">
+		        		<div ng-hide="new_model.receivedMODEL">{{c.MODEL}}</div> {{new_model.receivedMODEL}}
+		        	</ion-item>
+	    	</div>
+	    	<div class="col">
+		  	<a class="button button-clear button-small" ng-click="showmemodel=true" ng-show="!showmemodel">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear button-small" ng-click="showmemodel=false" ng-show="showmemodel">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+	    </div>
+    	<div ng-show="showmemodel">
+		    <form ng-submit="addModel(model)">
+			    <label class="item item-input">
+					<textarea placeholder="Model" ng-model="model.model"></textarea>
+				</label>
+				<button type="submit" class="button button-block button-positive">Update</button>
+			</form>
+		</div>
+		<div class="row">
+	 		<div class="col col-75 padding">
+	    		<i class="icon ion-ios-barcode-outline"></i> Serial number : 
+		        	<ion-item class="wrap">
+		        		<div ng-hide="new_serial.receivedSERIAL">{{c.SERIAL}}</div> {{new_serial.receivedSERIAL}}
+		        	</ion-item>
+	    	</div>
+	    	<div class="col">
+		  	<a class="button button-clear button-small" ng-click="showmeserial=true" ng-show="!showmeserial">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear button-small" ng-click="showmeserial=false" ng-show="showmeserial">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+	    </div>
+    	<div ng-show="showmeserial">
+		    <form ng-submit="addSerial(serial)">
+			    <label class="item item-input">
+					<textarea placeholder="Serial number" ng-model="serial.serial"></textarea>
+				</label>
+				<button type="submit" class="button button-block button-positive">Update</button>
+			</form>
+		</div>
+		<div class="row">
+	 		<div class="col col-75 padding">
+	    		<i class="icon ion-compose"></i>  Note : 
+		        	<ion-item class="wrap">
+		        		<div ng-hide="new_note.receivedNOTE">{{c.NOTE}}</div> {{new_note.receivedNOTE}}
+					</ion-item>
+	    	</div>
+	    	<div class="col">
+		  	<a class="button button-clear button-small" ng-click="showmenote=true" ng-show="!showmenote">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear button-small" ng-click="showmenote=false" ng-show="showmenote">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+	    </div>
+    	<div ng-show="showmenote">
+		    <form ng-submit="addNote(note)">
+			    <label class="item item-input">
+					<textarea rows="5" placeholder="Write in complete sentences." ng-model="note.note"></textarea>
+				</label>
+				<button type="submit" class="button button-block button-positive">Update</button>
+			</form>
+		</div>
+		
+		
+		<div class="row">
+        	<div class="col col-75 padding">
+        		<i class="icon ion-images"></i> Photo(s)
+        	</div>
+        	<div class="col">
+		  	<a class="button button-clear button-small" ng-click="showmephotos=true" ng-show="!showmephotos">  
+		      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+		    </a>
+		  </div>
+		 <div class="col">
+		  	<a class="button button-clear button-small" ng-click="showmephotos=false" ng-show="showmephotos">
+		      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+		    </a>
+		  </div>
+        </div>
+		<div ng-show="showmephotos">
+				<button class="button button-icon icon ion-camera" ng-click="upload()"></button>
+				<div class="row" ng-repeat="image in images" ng-if="$index % 4 === 0">
+		            <div class="col col-25" ng-if="$index < images.length">
+		                <img ng-src="data:image/jpeg;base64,{{images[$index].image}}" width="100%" />
+		            </div>
+		            <div class="col col-25" ng-if="$index + 1 < images.length">
+		                <img ng-src="data:image/jpeg;base64,{{images[$index + 1].image}}" width="100%" />
+		            </div>
+		            <div class="col col-25" ng-if="$index + 2 < images.length">
+		                <img ng-src="data:image/jpeg;base64,{{images[$index + 2].image}}" width="100%" />
+		            </div>
+		            <div class="col col-25" ng-if="$index + 3 < images.length">
+		                <img ng-src="data:image/jpeg;base64,{{images[$index + 3].image}}" width="100%" />
+		            </div>
+		        </div>
+			
+		</div>
+		
+		
+		<a class="button button-block button-outline button-calm" href="#/app/homeprofile/{{c.A_ID}}/{{c.PROP_ID}}">
+			<i class="icon ion-arrow-return-right"></i>  Return to profile
+		</a>
+		<a class="button button-block button-outline button-assertive" ng-click="deleteComponent()">
+			<i class="icon ion-trash-a"></i>  Delete changeable
+		</a>
+		
+	</ion-content>
+</ion-view>

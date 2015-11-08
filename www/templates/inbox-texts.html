@@ -1,0 +1,57 @@
+<ion-view view-title="Texting Inbox">
+  <ion-content>
+			<div class="button-bar">
+			  <a ng-click="showmecustomer=false" class="button button-block button-outline button-royal">
+			  	Partners
+			  	<b ng-hide="showmecustomer"><i class="icon ion-checkmark-circled"></i> </b> 
+			  </a>
+			  <a ng-click="showmecustomer=true" class="button button-block button-outline button-royal">
+			  	Customers
+			  	<b ng-show="showmecustomer"><i class="icon ion-checkmark-circled"></i> </b> 
+			  </a>
+			</div>
+
+		<a ng-hide="showmecustomer" ng-repeat="pt in pro_texts" class="item item-icon-{{pt.ALIGNMENT}}" href="#/app/textpro/{{pt.NUMBER_OF_INTEREST}}">
+			<div class="padding">[{{pt.PRETTY_DATE}}] {{pt.FROM_NAME}} wrote <i ng-show="{{pt.CSS_CLASS.length}}<4"> to {{pt.TO_NAME}}</i>:</div>
+			<ion-item class="us" ng-show="{{pt.CSS_CLASS.length}}<4">
+				{{pt.TEXT_CONTENT}}
+				<div class="item item-image" ng-show="{{pt.MEDIA_LINK}}">
+					<img src="{{pt.MEDIA_LINK}}">
+				</div>
+			</ion-item>
+			<ion-item class="them" ng-show="{{pt.CSS_CLASS.length}}>2">
+				{{pt.TEXT_CONTENT}}
+				<div class="item item-image" ng-show="{{pt.MEDIA_LINK}}">
+					<img src="{{pt.MEDIA_LINK}}">
+				</div>
+			</ion-item>
+		</a>
+		<a ng-show="showmecustomer" ng-repeat="ht in homeowner_texts" class="item item-icon-{{ht.ALIGNMENT}}" href="#/app/texthomeowner/{{ht.NUMBER_OF_INTEREST}}">
+			<div class="padding">[{{ht.PRETTY_DATE}}] {{ht.FROM_NAME}} wrote <i ng-show="{{ht.CSS_CLASS.length}}<4"> to {{ht.TO_NAME}}</i>:</div>
+			<ion-item class="us" ng-show="{{ht.CSS_CLASS.length}}<4">
+				{{ht.TEXT_CONTENT}}
+				<div class="item item-image" ng-show="{{ht.MEDIA_LINK}}">
+					<img src="{{ht.MEDIA_LINK}}">
+				</div>
+			</ion-item>
+			<ion-item class="them" ng-show="{{ht.CSS_CLASS.length}}>2">
+				{{ht.TEXT_CONTENT}}
+				<div class="item item-image" ng-show="{{ht.MEDIA_LINK}}">
+					<img src="{{ht.MEDIA_LINK}}">
+				</div>
+			</ion-item>
+		</a>
+		<!--<a class="item item-icon-left">
+			<div class="padding">[7:32pm 2/12] Hudson wrote :</div>
+			<ion-item class="us">
+			Hello
+			</ion-item>
+		</a>
+		<a class="item item-icon-right">
+			<div class="padding">[5:32pm 2/12] Luzio wrote :</div>
+			<ion-item class="them">
+			Sup?
+			</ion-item>
+		</a>-->
+  </ion-content>
+</ion-view>

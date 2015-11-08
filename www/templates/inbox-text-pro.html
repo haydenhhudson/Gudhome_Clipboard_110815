@@ -1,0 +1,34 @@
+<ion-view view-title="Text partner">
+  <ion-content ng-repeat="p in pro">
+	  <div class="list card">
+	  	<form ng-submit="sendText(thetext)">
+		  <label class="item item-input">
+		    Recipient : {{p.PRO_FNAME}} {{p.PRO_LNAME}}
+		  </label>
+		  <label class="item item-input">
+		  	To cell # : {{p.PRETTY_NUMBER}}
+		  	<input type="hidden" ng-model="thetext.tph" value="{{p.PRETTY_NUMBER}}">
+		  </label>
+		  <label class="item item-input">
+		    <textarea rows="4" placeholder="Type your Message here" ng-model="thetext.message"></textarea>
+		  </label>
+		  <button type="submit" class="button button-block button-positive"><i class="icon ion-paper-airplane"></i> Send text</button>
+		</form>
+	  </div>
+	  <a ng-repeat="pt in pro_texts" ng-show="{{pt.NUMBER_OF_INTEREST}}" class="item item-icon-{{pt.ALIGNMENT}}">
+			<div class="padding">[{{pt.PRETTY_DATE}}] {{pt.FROM_NAME}} wrote <i ng-show="{{pt.CSS_CLASS.length}}<4"> </i>:</div>
+			<ion-item class="us" ng-show="{{pt.CSS_CLASS.length}}<4">
+				{{pt.TEXT_CONTENT}}
+				<!--<div class="item item-image" ng-show="{{pt.MEDIA_LINK}}">
+					<img ng-src="{{pt.MEDIA_LINK}}">
+				</div>-->
+			</ion-item>
+			<ion-item class="them" ng-show="{{pt.CSS_CLASS.length}}>2">
+				{{pt.TEXT_CONTENT}}
+				<!--<div class="item item-image" ng-show="{{pt.MEDIA_LINK}}">
+					<img ng-src="{{pt.MEDIA_LINK}}">
+				</div>-->
+			</ion-item>
+		</a>
+  </ion-content>
+</ion-view>

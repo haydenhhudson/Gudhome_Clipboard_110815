@@ -1,0 +1,630 @@
+<ion-view view-title="Membership Pricing">
+	<ion-content >
+
+		<form ng-submit="createQuote(member)">
+			<div class="list card">
+				<div class="item item-divider">
+				    Basics
+				  </div>
+				<div class="item item-input row">
+					<div class="input-label padding-left col col-75 padding">
+					     # of Home Checks:
+					</div>
+					<div class="col">
+						<input type="number"  ng-model="member.visit_count">
+					</div>
+					<!--<div class="col">visit(s)</div>-->
+				</div>
+				<div class="item item-input row">
+					<div class="input-label padding-left col col-75 padding">
+					     Travel time / visit (hours):
+					</div>
+					<div class="col">
+						<input type="number" ng-model="member.visit_travel_time">
+					</div>
+					<!--<div class="col">hour(s)</div>-->
+				</div>
+			</div>
+			
+			<div class="list card">
+				<div class="item item-divider">
+				    Home Check - Basic
+				  </div>
+				<div class="item item-input row">
+					<div class="input-label padding-left col col-67 padding">
+					     <div class="item item-text-wrap">Interior square footage (sq ft):</div>
+					</div>
+					<div class="col">
+						<input type="number"  ng-model="member.sq_ft">
+					</div>
+					<!--<div class="col">sq. ft.</div>-->
+				</div>
+				<div class="row">
+			 		<div class="col padding">
+		        		View basic details
+		        	</div>
+		        	<div class="col">
+				  	<a class="button button-clear button-small" ng-click="showmedetails=true" ng-show="!showmedetails">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+	    		  </div>
+				 <div class="col">
+				  	<a class="button button-clear button-small" ng-click="showmedetails=false" ng-show="showmedetails">
+				      <i class="icon ion-minus-circled assertive"></i>
+				    </a>
+	    		  </div>
+		        </div>
+		        <div ng-show="showmedetails">
+					<div class="item item-text-wrap">
+				 	   (1) Tighten loose door knobs, handles and hinges
+				 	</div>
+				 	<div class="item item-text-wrap">
+				 	   (2) Record any drainage issues / damage to siding and trim. Look for leaks / moisture
+				 	</div>
+				 	<div class="item item-text-wrap">
+				 	   (3) Snake drains and record if plumbing runs properly and 
+				 	</div>
+				 	<div class="item item-text-wrap">
+				 	   (4) Record if lights/fan are working properly
+				 	</div>
+				 	<div class="item item-text-wrap">
+				 	   (5) Record set thermostat temperature and actual temperature
+				 	</div>
+				 	<div class="item item-text-wrap">
+				 	   (6) Record if doors / windows open / close improperly
+				 	</div>
+				 	<div class="item item-text-wrap">
+				 	   (7) Check sump pump and generator if applicable
+				 	</div>
+			 	</div>
+			</div>
+			
+			<div class="list card">
+				<div class="item item-divider">
+				    Home Check - Supplies
+				  </div>
+				<div class="row">
+					<div class="input-label padding-left col col-75 padding">Replace HVAC filter(s)
+					<br/><small>({{member.hvac_freq_change}} time(s) / year)</small>
+						<div ng-show="member.hvac_status">
+							+ $ {{ (((((
+				  			((member.hvac_count * member.hvac_freq_change * member.hvac_time * member.handyman_rate) + (member.hvac_count * member.hvac_freq_change * member.hvac_cost))* member.hvac_status
+				  			) * (1 + member.margin)
+				  			) / member.hvac_freq_change
+				  			) / 10
+				  			| number:0
+				  			) * 10
+				  			) - 1
+				  			}} / visit (+ tax) 
+			  			</div>
+					</div>
+					<label class="item item-radio col">
+				    <input type="radio" name="hvac" ng-value="1" ng-model="member.hvac_status">
+				    <div class="item-content">
+				      Y
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				  <label class="item item-radio col">
+				    <input type="radio" name="hvac" ng-value="0" ng-model="member.hvac_status">
+				    <div class="item-content">
+				      N
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				</div>
+					<div class="item item-input row" ng-show="member.hvac_status>0">
+						<div class="input-label padding-left col col-75 padding">
+						   <div class="item item-text-wrap"><i class="icon ion-chevron-right"></i>  
+						   	HVAC filter count :</div>
+						</div>
+						<div class="col">
+							<input type="number"  ng-model="member.hvac_count">
+						</div>
+						<!--<div class="col">filter(s)</div>-->
+					</div>
+					<div class="item item-input item-select row" ng-show="member.hvac_status>0">
+						<div class="input-label padding-left col col-75 padding">
+						   <div class="item item-text-wrap"><i class="icon ion-chevron-right"></i> Filter type:</div>
+						</div>
+						<div class="col">
+							<select ng-model="member.hvac_cost">
+						      	<option selected ng-value="5">Standard</option>
+						      	<option ng-value="10">Premium</option>
+						    </select>
+					    </div>
+					</div>
+				<div class="row">
+					<div class="input-label padding-left col col-75 padding">Replace Media filter(s)
+					<br/><small>({{member.media_freq_change}} time(s) / year)</small>
+						<div ng-show="member.media_status">
+							+ $ {{ (((((
+				  			((member.media_count * member.media_freq_change * member.media_time * member.handyman_rate)  + (member.media_count * member.media_freq_change * member.media_cost))* member.media_status
+				  			) * (1 + member.margin)
+				  			) / member.media_freq_change
+				  			) / 10
+				  			| number:0
+				  			) * 10
+				  			) - 1
+				  			}} / visit (+ tax) 
+			  			</div>
+					</div>
+					<label class="item item-radio col">
+				    <input type="radio" name="media" ng-value="1" ng-model="member.media_status">
+				    <div class="item-content">
+				      Y
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				  <label class="item item-radio col">
+				    <input type="radio" name="media" ng-value="0" ng-model="member.media_status">
+				    <div class="item-content">
+				      N
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				</div>
+				<div class="item item-input row" ng-show="member.media_status>0">
+					<div class="input-label padding-left col col-75 padding">
+					   <div class="item item-text-wrap"><i class="icon ion-chevron-right"></i>  Media filter count:</div>
+					</div>
+					<div class="col">
+						<input type="number" ng-model="member.media_count">
+					</div>
+					<!--<div class="col">filter(s)</div>-->
+				</div>
+				<div class="row">
+					<div class="input-label padding-left col col-75 padding">Test / replace Smoke/CO Detector(s)
+					<br/><small>({{member.smoke_freq_change}} time(s) / year)</small>
+						<div ng-show="member.smoke_status">
+							+ $ {{ (((((
+				  			((member.smoke_count * member.smoke_freq_change * member.smoke_time * member.handyman_rate) + (member.smoke_count * member.smoke_freq_change * member.smoke_cost))* member.smoke_status
+				  			) * (1 + member.margin)
+				  			) / member.smoke_freq_change
+				  			) / 10
+				  			| number:0
+				  			) * 10
+				  			) - 1
+				  			}} / visit (+ tax) 
+			  			</div>
+					</div>
+					<label class="item item-radio col">
+				    <input type="radio" name="smoke" ng-value="1" ng-model="member.smoke_status">
+				    <div class="item-content">
+				      Y
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				  <label class="item item-radio col">
+				    <input type="radio" name="smoke" ng-value="0" ng-model="member.smoke_status">
+				    <div class="item-content">
+				      N
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				</div>
+				<div class="item item-input row" ng-show="member.smoke_status>0">
+					<div class="input-label padding-left col col-75 padding">
+					     <div class="item item-text-wrap"><i class="icon ion-chevron-right"></i> Smoke/CO Detector Count:</div>
+					</div>
+					<div class="col">
+						<input type="number" ng-model="member.smoke_count">
+					</div>
+					<!--<div class="col">batteries</div>-->
+				</div>
+				<div class="row">
+					<div class="input-label padding-left col col-75 padding">Replace Fridge filter(s)
+					<br/><small>({{member.fridge_filter_freq_change}} time(s) / year)</small>
+						<div ng-show="member.fridge_filter_status">
+							+ $ {{ (((((
+				  			((member.fridge_filter_count * member.fridge_filter_freq_change * member.fridge_filter_time * member.handyman_rate) + ( member.fridge_filter_count * member.fridge_filter_freq_change  * member.fridge_filter_cost)) * member.fridge_filter_status
+				  			) * (1 + member.margin)
+				  			) / member.fridge_filter_freq_change
+				  			) / 10
+				  			| number:0
+				  			) * 10
+				  			) - 1
+				  			}} / visit (+ tax) 
+			  			</div>
+					</div>
+					<label class="item item-radio col">
+				    <input type="radio" name="fridge" ng-value="1" ng-model="member.fridge_filter_status">
+				    <div class="item-content">
+				      Y
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				  <label class="item item-radio col">
+				    <input type="radio" name="fridge" ng-value="0" ng-model="member.fridge_filter_status">
+				    <div class="item-content">
+				      N
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				</div>
+				<div class="item item-input row" ng-show="member.fridge_filter_status>0">
+					<div class="input-label padding-left col col-75 padding">
+					   <div class="item item-text-wrap"><i class="icon ion-chevron-right"></i> Fridge filter count:</div>
+					</div>
+					<div class="col">
+						<input type="number" ng-model="member.fridge_filter_count">
+					</div>
+					<!--<div class="col">filter(s)</div>-->
+				</div>
+				<div class="row">
+					<div class="input-label padding-left col col-75 padding ">
+						Replace Whole Home Water filter(s)
+						<br/><small>({{member.wholehouse_filter_freq_change}} time(s) / year)</small>
+							<div ng-show="member.wholehouse_filter_status">
+								+ $ {{ (((((
+					  			((member.wholehouse_filter_count * member.wholehouse_filter_freq_change * member.wholehouse_filter_time * member.handyman_rate) + ( member.wholehouse_filter_count * member.wholehouse_filter_freq_change  * member.wholehouse_filter_cost)) * member.wholehouse_filter_status
+					  			) * (1 + member.margin)
+					  			) / member.wholehouse_filter_freq_change
+					  			) / 10
+					  			| number:0
+					  			) * 10
+					  			) - 1
+					  			}} / visit (+ tax) 
+				  			</div>
+					</div>
+					<label class="item item-radio col">
+				    <input type="radio" name="wholehouse" ng-value="1" ng-model="member.wholehouse_filter_status">
+				    <div class="item-content">
+				      Y
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				  <label class="item item-radio col">
+				    <input type="radio" name="wholehouse" ng-value="0" ng-model="member.wholehouse_filter_status">
+				    <div class="item-content">
+				      N
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				</div>
+				<div class="item item-input row" ng-show="member.wholehouse_filter_status>0">
+					<div class="input-label padding-left col col-75 padding">
+					    <div class="item item-text-wrap"><i class="icon ion-chevron-right"></i>  Whole House Water filter count:</div>
+					</div>
+					<div class="col">
+						<input type="number" ng-model="member.wholehouse_filter_count">
+					</div>
+					<!--<div class="col">filter(s)</div>-->
+				</div>
+				<div class="row">
+					<div class="input-label padding-left col col-75 padding">Change light bulbs
+						<br/><small>({{member.visit_count}} time(s) / year)</small>
+						<div ng-show="member.light_status">
+							+ $ {{ (((((
+				  			 (member.light_time * member.handyman_rate) + member.light_cost
+				  			) * (1 + member.margin)
+				  			)
+				  			) / 10
+				  			| number:0
+				  			) * 10
+				  			) - 1
+				  			}} / bulb (+ tax) 
+				  			<br/> + $ {{ (((((
+				  			 (member.handyman_rate * member.visit_travel_time)
+				  			) * (1 + member.margin)
+				  			)
+				  			) / 10
+				  			| number:0
+				  			) * 10
+				  			) - 1
+				  			}} / trip (+tax)
+			  			</div>
+					</div>
+					<label class="item item-radio col">
+				    <input type="radio" name="group" ng-value="1" ng-model="member.light_status">
+				    <div class="item-content">
+				      Y
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				  <label class="item item-radio col">
+				    <input type="radio" name="group" ng-value="0" ng-model="member.light_status">
+				    <div class="item-content">
+				      N
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				</div>
+			</div>
+			<div class="list card">
+				<div class="item item-divider">
+				    Home Checks - Services
+				  </div>
+				
+				<div class="row">
+					<div class="input-label padding-left col col-75 padding">Clean dryer vent
+						<br/><small>({{member.dryer_freq}} time(s) / year)</small>
+							<div ng-show="member.dryer_status">
+								+ $ {{ (((((
+					  			 (member.dryer_count * member.dryer_time * member.dryer_freq * member.handyman_rate) * member.dryer_multiplier * member.dryer_status
+					  			) * (1 + member.margin)
+					  			) / member.dryer_freq
+					  			) / 10
+					  			| number:0
+					  			) * 10
+					  			) - 1
+					  			}} / visit (+ tax) 
+				  			</div>
+					</div>
+					<label class="item item-radio col">
+				    <input type="radio" name="light" ng-value="1" ng-model="member.dryer_status">
+				    <div class="item-content">
+				      Y
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				  <label class="item item-radio col">
+				    <input type="radio" name="dryer" ng-value="0" ng-model="member.dryer_status">
+				    <div class="item-content">
+				      N
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				</div>
+					<div class="item item-input row" ng-show="member.dryer_status>0">
+						<div class="input-label padding-left col col-75 padding">
+						    <div class="item item-text-wrap"><i class="icon ion-chevron-right"></i> Dryer count :</div>
+						</div>
+						<div class="col">
+							<input type="number" ng-model="member.dryer_count">
+						</div>
+						<!--<div class="col">dryer(s)</div>-->
+					</div>
+					<div class="item item-input item-select row" ng-show="member.dryer_status>0">
+						<div class="input-label padding-left col col-75 padding">
+						   <div class="item item-text-wrap"><i class="icon ion-chevron-right"></i> Dryer complexity:</div>
+						</div>
+						<div class="col">
+							<select ng-model="member.dryer_multiplier">
+						      	<option selected ng-value="1">No ladder necessary</option>
+						      	<option ng-value="1.25">Crawling/disassembling required</option>
+						      	<option ng-value="1.5">Ladder required (less than 8 ft)</option>
+						      	<option ng-value="1.75">Ladder required (more than 8 ft)</option>
+						      	<option ng-value="2.5">On roof</option>
+						    </select>
+					    </div>
+					</div>
+				<div class="row">
+					<div class="input-label padding-left col col-75 padding">Extreme weather check-ups
+						<br/><small>({{member.extra_visit_count}} time(s) / year)</small>
+							<div ng-show="member.extra_visit_status">
+								+ $ {{ (((((
+					  			(member.extra_visit_count * (member.extra_visit_time  + member.visit_travel_time) * member.handyman_rate) * member.extra_visit_status
+					  			) * (1 + member.margin)
+					  			) / member.extra_visit_count
+					  			) / 10
+					  			| number:0
+					  			) * 10
+					  			) - 1
+					  			}} / visit (+ tax) 
+				  			</div>
+					</div>
+					<label class="item item-radio col">
+				    <input type="radio" name="extra" ng-value="1" ng-model="member.extra_visit_status">
+				    <div class="item-content">
+				      Y
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				  <label class="item item-radio col">
+				    <input type="radio" name="extra" ng-value="0" ng-model="member.extra_visit_status">
+				    <div class="item-content">
+				      N
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				</div>
+				<div class="row">
+					<div class="input-label padding-left col col-75 padding ">
+						Clean bathroom fan(s) viubuyg
+						<br/><small>({{member.bathroom_fan_freq}} time(s) / year)</small>
+							<div ng-show="member.bathroom_fan_status">
+								+ $ {{ (((((
+					  			member.bathroom_fan_count * member.bathroom_fan_time  * member.handyman_rate * member.bathroom_fan_freq * member.bathroom_fan_status
+					  			) * (1 + member.margin)
+					  			) / member.bathroom_fan_freq
+					  			) / 10
+					  			| number:0
+					  			) * 10
+					  			) - 1
+					  			}} / visit (+ tax) 
+				  			</div>
+					</div>
+					<label class="item item-radio col">
+				    <input type="radio" name="fan" ng-value="1" ng-model="member.bathroom_fan_status">
+				    <div class="item-content">
+				      Y
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				  <label class="item item-radio col">
+				    <input type="radio" name="fan" ng-value="0" ng-model="member.bathroom_fan_status">
+				    <div class="item-content">
+				      N
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				</div>
+				<div class="item item-input row" ng-show="member.bathroom_fan_status>0">
+					<div class="input-label padding-left col col-75 padding">
+					    <div class="item item-text-wrap"><i class="icon ion-chevron-right"></i>  Bathroom fan count:</div>
+					</div>
+					<div class="col">
+						<input type="number" ng-model="member.bathroom_fan_count">
+					</div>
+					<!--<div class="col">filter(s)</div>-->
+				</div>
+				<div class="row">
+					<div class="input-label padding-left col col-75 padding ">
+						Drain outdoor spigot(s)
+						<br/><small>({{member.spigot_freq}} time(s) / year)</small>
+							<div ng-show="member.spigot_status">
+								+ $ {{ (((((
+					  			member.spigot_count * member.spigot_time  * member.handyman_rate * member.spigot_freq * member.spigot_status
+					  			) * (1 + member.margin)
+					  			) / member.spigot_freq
+					  			) / 10
+					  			| number:0
+					  			) * 10
+					  			) - 1
+					  			}} / visit (+ tax) 
+				  			</div>
+					</div>
+					<label class="item item-radio col">
+				    <input type="radio" name="spigot" ng-value="1" ng-model="member.spigot_status">
+				    <div class="item-content">
+				      Y
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				  <label class="item item-radio col">
+				    <input type="radio" name="spigot" ng-value="0" ng-model="member.spigot_status">
+				    <div class="item-content">
+				      N
+				    </div>
+				    <i class="radio-icon ion-checkmark"></i>
+				  </label>
+				</div>
+				<div class="item item-input row" ng-show="member.spigot_status>0">
+					<div class="input-label padding-left col col-75 padding">
+					    <div class="item item-text-wrap"><i class="icon ion-chevron-right"></i>  Spigot count:</div>
+					</div>
+					<div class="col">
+						<input type="number" ng-model="member.spigot_count">
+					</div>
+				</div>
+			</div>
+		 
+		 <!--<a class="button button-outline button-block button-royal"> 
+		  		Quote : $
+		  		{{ (((((
+		  			(member.mgmt_time * member.mgmt_rate + member.admin_time * member.admin_rate )
+		  			+ (member.handyman_rate * member.visit_travel_time) * member.visit_count
+		  			+ (member.sq_ft/member.sq_ft_per_hour)* member.handyman_rate * member.visit_count
+		  			+ (member.padding * member.handyman_rate * member.visit_count)
+		  			+ ((member.hvac_count * member.hvac_freq_change * member.hvac_time * member.handyman_rate) + (member.hvac_count * member.hvac_freq_change * member.hvac_cost))* member.hvac_status
+		  			+ ((member.media_count * member.media_freq_change * member.media_time * member.handyman_rate)  + (member.media_count * member.media_freq_change * member.media_cost))* member.media_status
+		  			+ ((member.smoke_count * member.smoke_freq_change * member.smoke_time * member.handyman_rate) + (member.smoke_count * member.smoke_freq_change * member.smoke_cost))* member.smoke_status
+		  			+ ((member.wholehouse_filter_count * member.wholehouse_filter_freq_change * member.wholehouse_filter_time * member.handyman_rate) + ( member.wholehouse_filter_count * member.wholehouse_filter_freq_change  * member.wholehouse_filter_cost)) * member.wholehouse_filter_status
+		  			+ ((member.fridge_filter_count * member.fridge_filter_freq_change * member.fridge_filter_time * member.handyman_rate) + ( member.fridge_filter_count * member.fridge_filter_freq_change  * member.fridge_filter_cost)) * member.fridge_filter_status
+		  			+ ((member.light_count * member.light_time * member.handyman_rate * member.visit_count) + (member.light_count * member.light_cost * member.visit_count)) * member.light_status
+		  			+ (member.dryer_count * member.dryer_time * member.dryer_freq * member.handyman_rate) * member.dryer_multiplier * member.dryer_status
+		  			+ (member.extra_visit_count * (member.extra_visit_time  + member.visit_travel_time) * member.handyman_rate) * member.extra_visit_status
+		  			+ member.bathroom_fan_count * member.bathroom_fan_time  * member.handyman_rate * member.bathroom_fan_status
+		  			) * (1 + member.margin)
+		  			) / 12
+		  			) / 10
+		  			| number:0
+		  			) * 10
+		  			) - 1
+		  		}} / month (+ tax)
+		 </a>-->
+		 
+		 <a class="button button-outline button-block button-royal"> 
+		  		Basic service : $
+		  		{{ (((((
+		  			(member.mgmt_time * member.mgmt_rate + member.admin_time * member.admin_rate )
+		  			+ (member.handyman_rate * member.visit_travel_time) * member.visit_count
+		  			+ (member.sq_ft/member.sq_ft_per_hour)* member.handyman_rate * member.visit_count
+		  			+ (member.padding * member.handyman_rate * member.visit_count)
+		  			) * (1 + member.margin)
+		  			) / 12
+		  			) / 10
+		  			| number:0
+		  			) * 10
+		  			) - 1
+		  		}} / month (+ tax)
+		 </a>
+		 
+		<!--<a class="button button-outline button-block button-royal"> 
+		  		Add-on services : $
+		  		{{ (((((
+		  			
+		  			((member.hvac_count * member.hvac_freq_change * member.hvac_time * member.handyman_rate) + (member.hvac_count * member.hvac_freq_change * member.hvac_cost))* member.hvac_status
+		  			+ ((member.media_count * member.media_freq_change * member.media_time * member.handyman_rate)  + (member.media_count * member.media_freq_change * member.media_cost))* member.media_status
+		  			+ ((member.smoke_count * member.smoke_freq_change * member.smoke_time * member.handyman_rate) + (member.smoke_count * member.smoke_freq_change * member.smoke_cost))* member.smoke_status
+		  			+ ((member.wholehouse_filter_count * member.wholehouse_filter_freq_change * member.wholehouse_filter_time * member.handyman_rate) + ( member.wholehouse_filter_count * member.wholehouse_filter_freq_change  * member.wholehouse_filter_cost)) * member.wholehouse_filter_status
+		  			+ ((member.fridge_filter_count * member.fridge_filter_freq_change * member.fridge_filter_time * member.handyman_rate) + ( member.fridge_filter_count * member.fridge_filter_freq_change  * member.fridge_filter_cost)) * member.fridge_filter_status
+		  			+ ((member.light_count * member.light_time * member.handyman_rate * member.visit_count) + (member.light_count * member.light_cost * member.visit_count)) * member.light_status + (member.dryer_count * member.dryer_time * member.dryer_freq * member.handyman_rate) * member.dryer_multiplier * member.dryer_status
+		  			+ member.bathroom_fan_count * member.bathroom_fan_time  * member.handyman_rate * member.bathroom_fan_status
+		  			) * (1 + member.margin)
+		  			) / member.visit_count
+		  			) / 10
+		  			| number:0
+		  			) * 10
+		  			) - 1
+		  		}} / visit (+ tax)
+		</a>-->
+		 
+		 <!--<a class="button button-outline button-block button-royal"> 
+		  		Extra visit : $
+		  		{{ (((((
+		  			 (member.extra_visit_count * (member.extra_visit_time  + member.visit_travel_time) * member.handyman_rate) * member.extra_visit_status
+		  			) * (1 + member.margin)
+		  			) / member.extra_visit_count
+		  			) / 10
+		  			| number:0
+		  			) * 10
+		  			) - 1
+		  		}} /  extra visit (+ tax)
+		 </a>-->
+		 
+		 <!--<button class="button button-outline button-block button-royal"> 
+		  		sga cost : ${{ member.mgmt_time * member.mgmt_rate + member.admin_time * member.admin_rate}}
+		  		<br/> + visit travel cost {{ (member.handyman_rate * member.visit_travel_time) * member.visit_count}} 
+		  		<br /> + inspection cost {{ (member.sq_ft/member.sq_ft_per_hour)* member.handyman_rate * member.visit_count}}
+		  		<br/> + hvac cost {{  ((member.hvac_count * member.hvac_freq_change * member.hvac_time * member.handyman_rate) + (member.hvac_count * member.hvac_freq_change * member.hvac_cost))* member.hvac_status}}
+		  		<br/> + media cost {{  ((member.media_count * member.media_freq_change * member.media_time * member.handyman_rate)  + (member.media_count * member.media_freq_change * member.media_cost))* member.media_status }}
+		  		<br/> + smoke cost {{  ((member.smoke_count * member.smoke_freq_change * member.smoke_time * member.handyman_rate) + (member.smoke_count * member.smoke_freq_change * member.smoke_cost))* member.smoke_status }}
+		  		<br/> + whole house cost {{  ((member.wholehouse_filter_count * member.wholehouse_filter_freq_change * member.wholehouse_filter_time * member.handyman_rate) + ( member.wholehouse_filter_count * member.wholehouse_filter_freq_change  * member.wholehouse_filter_cost)) * member.wholehouse_filter_status }}
+		  		<br/> + fridge cost {{  ((member.fridge_filter_count * member.fridge_filter_freq_change * member.fridge_filter_time * member.handyman_rate) + ( member.fridge_filter_count * member.fridge_filter_freq_change  * member.fridge_filter_cost)) * member.fridge_filter_status }}
+		  		<br/> + light cost {{  ((member.light_count * member.light_time * member.handyman_rate * member.visit_count) + (member.light_count * member.light_cost * member.visit_count)) * member.light_status }}
+		  		<br/> + dryer cost {{  (member.dryer_count * member.dryer_time * member.dryer_freq * member.handyman_rate) * member.dryer_multiplier * member.dryer_status }}
+		  		<br/> + extra visit cost {{  (member.extra_visit_count * (member.extra_visit_time  + member.visit_travel_time) * member.handyman_rate) * member.extra_visit_status }}
+		 </button>-->
+		 
+		 <div class="list card">
+			<div class="row">
+	        	<div class="col col-75 padding">
+	        		<i class="icon ion-person"></i> Customer details
+	        	</div>
+	        	<div class="col">
+			  	<a class="button button-clear button-small" ng-click="customerdetails=true" ng-show="!customerdetails">  
+			      <i class="icon ion-ios-arrow-down balanced"></i>
+			    </a>
+    		  </div>
+			 <div class="col">
+			  	<a class="button button-clear button-small" ng-click="customerdetails=false" ng-show="customerdetails">
+			      <i class="icon ion-minus-circled assertive"></i>
+			    </a>
+    		  </div>
+	        </div>
+			<div ng-show="customerdetails">
+				<div class="list">
+					<label class="item item-input">
+						<input type="text" ng-model="member.fname" placeholder="First Name">
+					</label>
+					<label class="item item-input">
+						<input type="text" ng-model="member.lname" placeholder="Last Name">
+					</label>
+					<label class="item item-input">
+						<input type="text" ng-model="member.email" placeholder="Email">
+					</label>
+					<label class="item item-input">
+						<textarea ng-model="member.address" placeholder="Address"></textarea>
+					</label>
+				</div>
+			</div>
+		</div>
+		  	
+			  <button type="submit" class="button button-block button-positive">Save</button>
+			
+		</form>
+	</ion-content>
+		
+</ion-view>

@@ -1,0 +1,244 @@
+<ion-view view-title="Address">
+	<ion-content ng-repeat="a in address">
+		
+			<div class="item item-divider" >
+				<h4 class="title">
+					<i class="icon ion-ios-home-outline"></i> {{a.ADDRESS}}
+				</h4>
+				<div>
+			  		<a class="button button-positive button-outline button-small" href="#/app/contacthomeowner/{{a.A_ID}}/{{a.USER_ID}}">  
+				      {{a.USER_FNAME}} {{a.USER_LNAME}}
+				    </a>
+				</div>
+			</div>
+			
+			
+			
+			<div class="list card">
+				<div class="item item-divider">
+					<i class="icon ion-hammer"></i> Projects
+				</div>
+				<label class="item item-input">
+					<i class="icon ion-search placeholder-icon"></i>
+					<input type="text" placeholder="Search projects" ng-model="query">
+				</label>
+				<div class="row"  ng-repeat="project in projects | filter:query" >
+			 		<div class="col col-75 padding">
+			 			<div class="item item-text-wrap">
+			    			{{project.T_NAME}}
+			    			<br/> ({{project.T_STATE_DESC}})
+			    		</div>
+			    	</div>
+					 <div class="col">
+					  	<a class="button button-positive button-small" href="#/app/project/{{project.T_ID}}">
+					      {{project.COMPLETED_CNT}}/{{project.CNT}}
+					    </a>
+					  </div>
+			    </div>
+				<!--<a class="item item-icon-left" ng-repeat="project in projects | filter:query" href="#/app/project/{{project.T_ID}}">
+					<i class="icon ion-hammer"></i> {{project.T_NAME}}
+					<span class="badge badge-calm">{{project.COMPLETED_CNT}}/{{project.CNT}}</span>
+				</a>-->
+				<div class="row">
+			 		<div class="col col-75 padding">
+			    		New project
+			    	</div>
+			    	<div class="col">
+				  	<a class="button button-clear" ng-click="newproject=true" ng-show="!newproject">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+				  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="newproject=false" ng-show="newproject">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+				  </div>
+			    </div>
+				<div ng-show="newproject">
+				    <form ng-submit="brandNewProject(project)">
+					    <label class="item item-input">
+							<input type="text" placeholder="Name your project" ng-model="project.projectname">
+					  	</label>
+						<button type="submit" class="button button-block button-positive">Create new project</button>
+					</form>
+				</div>
+			</div>
+			
+			<div class="list card">
+				<div class="item item-divider">
+					<i class="icon ion-thermometer"></i> Home Profile & Checks
+				</div>
+				<a class="button button-block button-outline button-positive" href="#/app/homeprofile/{{a.A_ID}}/{{a.PROP_ID}}">Home Profile</a>
+				<div ng-repeat="h in hcid">
+					<!--<a class="button button-block button-outline button-balanced"  href="#/homecheck/{{h.HC_ID}}" ng-show="{{h.HC_ID}}" >
+						<i ng-hide="{{h.ACTION_COUNT}}">Start</i><i ng-show="{{h.ACTION_COUNT}}">Resume</i> Visit #{{h.PRETTY_VISIT_NUMBER}} <smalll>(due {{h.PRETTY_DATE_OF_VISIT}})</smalll> <i class="icon ion-play"></i>
+					</a>-->
+						<a class="button button-block button-outline button-calm" ng-hide="{{h.ACTION_COUNT}}" ng-click="showmenewhc=true">
+							Create new visit for this address
+						</a>
+					<div ng-show="showmenewhc" class="item item-button-right">
+						<button class="button button-outline button-assertive" ng-click="showmenewhc=false">
+							<i class="icon ion-close"></i>
+						</button>
+						<form ng-submit="brandNewHC(newvisit)">
+							<div class="list">
+								<div class="item item-input item-select">
+									<div class="input-label">
+									  Pick visit #
+									</div>
+									<select ng-model="newvisit.visit_number">
+										<option selected value="0">0</option>
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+									</select>
+								</div>
+								<div class="item item-input item-select">
+									<div class="input-label">
+									      Pick date
+									</div>
+									<label class="item item-input">
+										<input type="date" ng-model="newvisit.date">
+									</label>
+								</div>
+								<div class="item item-input item-select">
+									<div class="input-label">
+									      Pick time
+									</div>
+									<label class="item item-input">
+										<input type="time" ng-model="newvisit.visit_time">
+									</label>
+								</div>		
+							</div>  
+							<button type="submit" class="button button-block button-positive">Create new Home Check</button>
+						</form>
+					</div>     
+						    
+					</div>
+				</div>
+				<a ng-click="showmehistory=true" class="item item-icon-left">
+		        	<i class="icon ion-ios-timer"></i> View Home Check History
+		        </a>
+				<!--<div ng-show="showmehistory" class="item item-button-right">
+					<button class="button button-outline button-assertive" ng-click="showmehistory=false">
+				      <i class="icon ion-close"></i>
+				    </button>
+		            <button class="item" ng-repeat="h in hcids" ng-click="openUrl('{{h.HC_ID}}')" ng-show="{{h.HC_ID}}">
+		                <i class="icon ion-eye"></i> Visit #{{h.PRETTY_VISIT_NUMBER}} <smalll>({{h.PRETTY_DATE_OF_VISIT}})</smalll>
+		            </button>
+		    </div>-->
+			
+			<div class="list card">
+				<div class="item item-divider">
+					<i class="icon ion-hammer"></i> Concierge services
+				</div>
+				<label class="item item-input">
+					<i class="icon ion-search placeholder-icon"></i>
+					<input type="text" placeholder="Search concierge services" ng-model="squery">
+				</label>
+				<div class="row"  ng-repeat="s in services | filter:squery" >
+			 		<div class="col col-75 padding">
+			 			<div class="item item-text-wrap">
+			    			{{s.SERVICE_DESC}}
+			    			<br/>{{s.CONCIERGE_SERVICE_DESC}}
+			    		</div>
+			    	</div>
+					 <div class="col">
+					  	<a class="button button-positive button-small" href="#/app/conciergeservice/{{s.RECORD_SERVICE_ID}}">
+					      {{s.T_STATE_DESC}}
+					    </a>
+					  </div>
+			    </div>
+				<!--<a class="item item-icon-left" ng-repeat="project in projects | filter:query" href="#/app/project/{{project.T_ID}}">
+					<i class="icon ion-hammer"></i> {{project.T_NAME}}
+					<span class="badge badge-calm">{{project.COMPLETED_CNT}}/{{project.CNT}}</span>
+				</a>-->
+				<div class="row">
+			 		<div class="col col-75 padding">
+			    		New concierge service
+			    	</div>
+			    	<div class="col">
+				  	<a class="button button-clear" ng-click="newservice=true" ng-show="!newservice">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+				  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="newservice=false" ng-show="newservice">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+				  </div>
+			    </div>
+				<div ng-show="newservice">
+					<form ng-submit="addConcierge(service)">
+				    	<div class="item item-input item-select">
+							<div class="input-label">
+							   Pick type:
+							</div>
+							<select ng-model="service.servicetype">
+						      	<option ng-repeat="t in concierge_type" ng-value="{{t.INSPECT_ID}}">{{t.INSPECT_DESC}}</option>
+						    </select>
+						</div>
+					    <label class="item item-input">
+							<input type="text" placeholder="Name service" ng-model="service.servicename">
+					  	</label>
+						<button type="submit" class="button button-block button-positive">Add concierge service</button>
+					</form>
+				</div>
+			</div>
+			
+			<div class="card">
+				<div class="item item-divider">
+					Specify Slack channel
+				</div>
+		        <div class="row">
+			 		<div class="col col-75 padding">
+			    		Slack channel : {{a.SLACK_CHANNEL}}
+			    	</div>
+			    	<div class="col">
+				  	<a class="button button-clear" ng-click="slackchannel=true" ng-show="!slackchannel">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+				  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="slackchannel=false" ng-show="slackchannel">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+				  </div>
+			    </div>
+				<form ng-show="slackchannel" ng-submit="addSlack(channel)">
+				    <label class="item item-input">
+						<textarea rows="5" placeholder="#general" ng-model="channel.channel"></textarea>
+					</label>
+					<button type="submit" class="button button-block button-positive">Update</button>
+				</form>
+			</div>
+			
+			<div class="card">
+				<div class="item item-divider">
+					Home access information
+				</div>
+		        <div class="row">
+			 		<div class="col col-75 padding">
+			    		{{a.ACCESS_INFO}}
+			    	</div>
+			    	<div class="col">
+				  	<a class="button button-clear" ng-click="accessinfo=true" ng-show="!accessinfo">  
+				      <i class="icon ion-android-arrow-dropdown-circle positive"></i>
+				    </a>
+				  </div>
+				 <div class="col">
+				  	<a class="button button-clear" ng-click="accessinfo=false" ng-show="accessinfo">
+				      <i class="icon ion-android-arrow-dropup-circle assertive"></i>
+				    </a>
+				  </div>
+			    </div>
+				<form ng-show="accessinfo" ng-submit="addAccess(info)">
+				    <label class="item item-input">
+						<textarea rows="5" placeholder="Enter access data" ng-model="info.info"></textarea>
+					</label>
+					<button type="submit" class="button button-block button-positive">Update</button>
+				</form>
+			</div>
+	</ion-content>
+</ion-view>
